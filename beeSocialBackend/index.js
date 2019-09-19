@@ -3,22 +3,33 @@ const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const cors = require('cors');
+var CONFIG = require('./config.json');
+var PORT = parseInt(CONFIG.server.port, 10);
+var HOST_NAME = CONFIG.server.hostName;
+var DATABASE_NAME = CONFIG.database.name;
+var tokenMiddleware = require('./middleware/token');
 
-const url = 'mongodb://localhost:27017/BeeSocialDB';
-const connect = mongoose.connect(url);
 
-connect.then((db) => {
+mongoose.connect('mongodb://' + HOST_NAME + '/' + DATABASE_NAME)
+.then((db) => {
     console.log("Connected correctly to server");
 }, (err) => {
     console.log(err);
 });
 
-const hostname = 'localhost';
-const port = process.env.PORT || 3000;
 
 const app = express();
-app.use(morgan('dev'));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+app.use(cors());
+app.use(morgan('dev'));
+
+
+var usersRoutes = require('./routes/users');
+app.use('/api/users', usersRoutes);
 
 app.use((req, res, next) => {
     // console.log(req.headers);
@@ -27,8 +38,9 @@ app.use((req, res, next) => {
     res.end('<html><body><h1>This is express server</h1></body></html>');
 });
 
-const server = http.createServer(app);
-
-server.listen(port, hostname, () => {
-    console.log(`Server running at http://${hostname}:${port}`);
-});
+var server = app.listen(PORT, function () {
+    var host = server.address().address;
+    var port = server.address().port;
+  
+    console.log('Server listening at http://%s:%s', host, port);
+  });
