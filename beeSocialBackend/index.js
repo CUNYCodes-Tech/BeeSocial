@@ -2,10 +2,19 @@ const express = require('express');
 const http = require('http');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const url = 'mongodb://localhost:27017/BeeSocialDB';
+const connect = mongoose.connect(url);
+
+connect.then((db) => {
+    console.log("Connected correctly to server");
+}, (err) => {
+    console.log(err);
+});
 
 const hostname = 'localhost';
 const port = process.env.PORT || 3000;
-
 
 const app = express();
 app.use(morgan('dev'));
