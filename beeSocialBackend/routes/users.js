@@ -100,7 +100,7 @@ router.post('/authenticate', function authenticateUser(request, response) {
       throw error;
     }
 
-    if (! user) {
+    if (!user) {
 
       response.status(401).json({
         success: false,
@@ -121,7 +121,7 @@ router.post('/authenticate', function authenticateUser(request, response) {
         throw error;
       }
 
-      if (! result) {
+      if (!result) {
 
         response.status(401).json({
           success: false,

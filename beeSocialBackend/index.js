@@ -10,10 +10,11 @@ var HOST_NAME = CONFIG.server.hostName;
 var DATABASE_NAME = CONFIG.database.name;
 var tokenMiddleware = require('./middleware/token');
 
-
-mongoose.connect('mongodb://' + HOST_NAME + '/' + DATABASE_NAME)
+const url = 'mongodb://' + HOST_NAME + ':27017/' + DATABASE_NAME;
+const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+connect
 .then((db) => {
-    console.log("Connected correctly to server");
+    console.log("Connected correctly to the database");
 }, (err) => {
     console.log(err);
 });
@@ -42,5 +43,5 @@ var server = app.listen(PORT, function () {
     var host = server.address().address;
     var port = server.address().port;
   
-    console.log('Server listening at http://%s:%s', host, port);
+    console.log('Server listening at http://%s:%s', HOST_NAME, port);
   });
