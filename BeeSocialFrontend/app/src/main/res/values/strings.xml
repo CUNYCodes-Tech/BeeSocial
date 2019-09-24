@@ -9,4 +9,8 @@
     <string name="username">Username</string>
     <string name="click_here_to_finish_registration">Click Here To Finish Registration</string>
     <string name="login">Login</string>
+    <string name="new_users">New Users</string>
+    <string name="forgot_login">Forgot Login?</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="beesociallogo">BeeSocialLogo</string>
 </resources>
