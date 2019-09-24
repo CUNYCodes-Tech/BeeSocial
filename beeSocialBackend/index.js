@@ -8,39 +8,39 @@ var CONFIG = require('./config.json');
 var PORT = parseInt(CONFIG.server.port, 10);
 var HOST_NAME = CONFIG.server.hostName;
 var DATABASE_NAME = CONFIG.database.name;
-var tokenMiddleware = require('./middleware/token');
+// var tokenMiddleware = require('./middleware/token');
+var passport = require('passport');
 
+// connecting to the database
+const url = 'mongodb://' + HOST_NAME + ':27017/' + DATABASE_NAME;
+const connect = mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
+connect
+    .then((db) => {
+        console.log("Connected correctly to the database");
+    }, (err) => {
+        console.log(err);
+    });
 
-mongoose.connect('mongodb://' + HOST_NAME + '/' + DATABASE_NAME)
-.then((db) => {
-    console.log("Connected correctly to server");
-}, (err) => {
-    console.log(err);
-});
-
-
+// middleware
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+    extended: false
 }));
 app.use(cors());
 app.use(morgan('dev'));
-
-
-var usersRoutes = require('./routes/users');
+app.use(passport.initialize());
+// routes
+const mainRoutes = require('./routes/index');
+const usersRoutes = require('./routes/users');
+app.use('/', mainRoutes);
 app.use('/api/users', usersRoutes);
 
-app.use((req, res, next) => {
-    // console.log(req.headers);
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'text/html');
-    res.end('<html><body><h1>This is express server</h1></body></html>');
-});
 
+//starup the server
 var server = app.listen(PORT, function () {
     var host = server.address().address;
     var port = server.address().port;
-  
-    console.log('Server listening at http://%s:%s', host, port);
-  });
+
+    console.log('Server listening at http://%s:%s', HOST_NAME, port);
+});
