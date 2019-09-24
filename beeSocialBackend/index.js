@@ -8,7 +8,8 @@ var CONFIG = require('./config.json');
 var PORT = parseInt(CONFIG.server.port, 10);
 var HOST_NAME = CONFIG.server.hostName;
 var DATABASE_NAME = CONFIG.database.name;
-var tokenMiddleware = require('./middleware/token');
+// var tokenMiddleware = require('./middleware/token');
+var passport = require('passport');
 
 // connecting to the database
 const url = 'mongodb://' + HOST_NAME + ':27017/' + DATABASE_NAME;
@@ -28,6 +29,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cors());
 app.use(morgan('dev'));
+app.use(passport.initialize());
 // routes
 const mainRoutes = require('./routes/index');
 const usersRoutes = require('./routes/users');
