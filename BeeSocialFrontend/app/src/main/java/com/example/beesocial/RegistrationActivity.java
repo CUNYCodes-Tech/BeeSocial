@@ -1,12 +1,9 @@
 package com.example.beesocial;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,22 +34,28 @@ import java.util.Map;
  */
 
 public class RegistrationActivity extends AppCompatActivity {
+    //Global variables to be used throughout the activity
     EditText appFirstName;
     EditText appLastName;
     EditText appEmailAddress;
     EditText appPassword;
+    EditText appConfirmPassword;
 
+    //Allows the XML page to be rendered
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
         setContentView(R.layout.registration_page);
 
+        //Grabs all the information from the text fields
         Button registerButton = findViewById(R.id.registerButton);
         appFirstName = findViewById(R.id.firstName);
         appLastName = findViewById(R.id.lastName);
         appEmailAddress = findViewById(R.id.emailAddress);
         appPassword = findViewById(R.id.password);
+        appConfirmPassword = findViewById(R.id.confirmPassword);
 
+        //Sets behavior and action to take once the register button has been clicked
         registerButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
@@ -63,55 +66,73 @@ public class RegistrationActivity extends AppCompatActivity {
         );
     }
 
+    //Method to register a new user
     private void registerUser() {
+        //Creates a request queue and takes the global variables' values
+        // and saves them to local ones
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-        String username = appEmailAddress.getText().toString().trim();
-        String password = appPassword.getText().toString().trim();
         String firstName = appFirstName.getText().toString().trim();
         String lastName = appLastName.getText().toString().trim();
-        String url = "http://10.0.2.2:8888/api/users/signup";
+        String username = appEmailAddress.getText().toString().trim();
+        String password = appPassword.getText().toString().trim();
+        String confirmPassword = appConfirmPassword.getText().toString().trim();
+
+        //Displays message if passwords do not match
+        if (!password.equals(confirmPassword)) {
+            Toast toast = Toast.makeText(getApplicationContext(), "Password fields do not match!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+        String url = "http://10.0.2.2:8888/api/users/signup"; //URL where the information will be sent
+
+        //Sends the saved information if passwors match to the server
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
+            //If successful, display a Toast confirming registration went through
                     @Override
                     public void onResponse(String response) {
+                        String reply = null;
                         try {
                             JSONObject data = new JSONObject(response);
+                            reply = data.getString("status");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                response,
+                                reply,
                                 Toast.LENGTH_LONG);
 
                         toast.show();
-                        System.out.println(response);
-                        //code to redirect screen goes here
                         finish();
 
                     }
                 },
                 new Response.ErrorListener() {
+            //If it failed, display a Toast explaining why
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        String body = null;
-                        //get status code here
-                        String statusCode = String.valueOf(error.networkResponse.statusCode);
-                        //get response body and parse with appropriate encoding
-                        if (error.networkResponse.data != null) {
-                            try {
-                                body = new String(error.networkResponse.data, "UTF-8");
-                            } catch (UnsupportedEncodingException e) {
-                                e.printStackTrace();
-                            }
+                        String message = null;
+                        try {
+                            String responseBody = new String(error.networkResponse.data, "utf-8");
+                            JSONObject data = new JSONObject(responseBody);
+                            JSONObject data2 = new JSONObject(data.optString("err"));
+                            message = data2.optString("message");
+                        } catch (UnsupportedEncodingException e) {
+
+                        } catch (JSONException e) {
+
                         }
+
                         Toast toast = Toast.makeText(getApplicationContext(),
-                                body,
+                                message,
                                 Toast.LENGTH_LONG);
 
                         toast.show();
-                        System.out.println(body);
+                        System.out.println(message);
+
                     }
                 }) {
+            //Load the parameters into the request body of the JSON object
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
@@ -122,7 +143,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 return params;
             }
         };
-
+        //Fires off to the backend
         requestQueue.add(stringRequest);
     }
 
