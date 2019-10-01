@@ -33,8 +33,10 @@ app.use(passport.initialize());
 // routes
 const mainRoutes = require('./routes/index');
 const usersRoutes = require('./routes/users');
+const profileRoutes = require('./routes/profile');
 app.use('/', mainRoutes);
 app.use('/api/users', usersRoutes);
+app.use('/api/profile', profileRoutes);
 
 
 //starup the server
