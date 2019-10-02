@@ -15,7 +15,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -77,18 +76,39 @@ public class RegistrationActivity extends AppCompatActivity {
         String password = appPassword.getText().toString().trim();
         String confirmPassword = appConfirmPassword.getText().toString().trim();
 
+        //Displays message if names do not contain only letters
+        for (int i = 0; i != firstName.length(); ++i) {
+            if (!Character.isLetter(firstName.charAt(i))) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "First name contains non-alphabetic characters!", Toast.LENGTH_LONG);
+                toast.show();
+                return;
+            }
+        }
+
+        for (int i = 0; i != lastName.length(); ++i) {
+            if (!Character.isLetter(lastName.charAt(i))) {
+                Toast toast = Toast.makeText(getApplicationContext(),
+                        "Last name contains non-alphabetic characters!", Toast.LENGTH_LONG);
+                toast.show();
+                return;
+            }
+        }
+
+
         //Displays message if passwords do not match
         if (!password.equals(confirmPassword)) {
-            Toast toast = Toast.makeText(getApplicationContext(), "Password fields do not match!", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Password fields do not match!", Toast.LENGTH_SHORT);
             toast.show();
             return;
         }
         String url = "http://10.0.2.2:8888/api/users/signup"; //URL where the information will be sent
 
-        //Sends the saved information if passwors match to the server
+        //Sends the saved information if passwords match to the server
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
-            //If successful, display a Toast confirming registration went through
+                    //If successful, display a Toast confirming registration went through
                     @Override
                     public void onResponse(String response) {
                         String reply = null;
@@ -108,7 +128,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     }
                 },
                 new Response.ErrorListener() {
-            //If it failed, display a Toast explaining why
+                    //If it failed, display a Toast explaining why
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         String message = null;
