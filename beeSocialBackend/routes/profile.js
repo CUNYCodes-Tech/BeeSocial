@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 profileRouter.use(bodyParser.json());
 var User = require('../models/user');
 var authenticate = require('../middleware/auth');
+var jwt = require('jsonwebtoken');
 
 profileRouter.route('/:userId')
     .get(authenticate.verifyUser, (req, res, next) => {
@@ -44,7 +45,16 @@ profileRouter.route('/:userId')
     })
     .put(authenticate.verifyUser, (req, res, next) => {
         var userId = req.params.userId;
+        var currentUser = req.headers;
+        var token = currentUser.authorization.split(" ")[1];
+        currentUser = jwt.decode(token)._id;
+        if (currentUser !== userId) {
+            res.statusCode = 403;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({ status: 403, message: "Not allowed"});
+        }
         User.findByIdAndUpdate(userId, {
+            // TODO
             $set: req.body
         }, { new: true })
             .then((user) => {
