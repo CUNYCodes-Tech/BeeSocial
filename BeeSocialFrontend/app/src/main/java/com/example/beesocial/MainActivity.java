@@ -32,9 +32,6 @@ public class MainActivity extends AppCompatActivity {
     EditText appEmailAddress;
     EditText appPassword;
 
-//    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-//    SharedPreferences.Editor editor = sharedPreferences.edit();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,28 +58,33 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginUser();
-                Intent intent = new Intent(MainActivity.this, testActivity.class);
-                startActivity(intent);
             }
         });
     }
 
+    //Method to log in a user
     private void loginUser() {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String emailAddress = appEmailAddress.getText().toString().trim();
         String password = appPassword.getText().toString().trim();
         String url = "http://10.0.2.2:8888/api/users/login"; //URL where the information will be sent
 
-        //Sends the saved information if passwords match to the server
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                 new Response.Listener<String>() {
-                    //If successful, display a Toast confirming registration went through
+                    //If successful, display a Toast confirming login was successful
                     @Override
                     public void onResponse(String response) {
+                        SharedPreferences sharedPreferences =
+                                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        String token;
                         String reply = null;
                         try {
                             JSONObject data = new JSONObject(response);
                             reply = data.getString("status");
+                            token = data.getString("token");
+                            editor.putString("token", token);
+                            editor.apply();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
                                 reply,
                                 Toast.LENGTH_LONG);
                         toast.show();
+                        Intent intent = new Intent(MainActivity.this, testActivity.class);
+                        startActivity(intent);
                         //finish();
                     }
                 },
@@ -98,16 +102,16 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         String message = "Incorrect credentials!";
-                        try {
-                            String responseBody = new String(error.networkResponse.data, "utf-8");
-                            JSONObject data = new JSONObject(responseBody);
-                            JSONObject data2 = new JSONObject(data.optString("err"));
-                            message = data2.optString("message");
-                        } catch (UnsupportedEncodingException e) {
-
-                        } catch (JSONException e) {
-
-                        }
+//                        try {
+//                            String responseBody = new String(error.networkResponse.data, "utf-8");
+//                            JSONObject data = new JSONObject(responseBody);
+//                            JSONObject data2 = new JSONObject(data.optString("err"));
+//                            message = data2.optString("message");
+//                        } catch (UnsupportedEncodingException e) {
+//
+//                        } catch (JSONException e) {
+//
+//                        }
 
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 message,
