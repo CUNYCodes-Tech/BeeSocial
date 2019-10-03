@@ -5,9 +5,9 @@ profileRouter.use(bodyParser.json());
 var User = require('../models/user');
 var authenticate = require('../middleware/auth');
 
-profileRouter.route('/:id')
+profileRouter.route('/:userId')
     .get(authenticate.verifyUser, (req, res, next) => {
-        var userId = req.params.id;
+        var userId = req.params.userId;
         User.findById(userId)
             .then((user) => {
                 if (user) {
@@ -38,10 +38,33 @@ profileRouter.route('/:id')
                 res.json({ err: err });
             })
     })
-// .post(authenticate.verifyUser, (req, res, next) => {
-
-// })
-// .put()
-// .delete()
+    .post((req, res, next) => {
+        res.statusCode = 403;
+        res.end('POST operation not supported on /profile');
+    })
+    .put(authenticate.verifyUser, (req, res, next) => {
+        var userId = req.params.userId;
+        User.findByIdAndUpdate(userId, {
+            $set: req.body
+        }, { new: true })
+            .then((user) => {
+                res.statusCode = 200;
+                res.setHeader('Content-Type', 'application/json');
+                res.json(user)
+            }, (err) => {
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({ err: err });
+            })
+            .catch((err) => {
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({ err: err });
+            })
+    })
+    .delete((req, res, next) => {
+        res.statusCode = 403;
+        res.end('delete operation not supported on /profile');
+    })
 
 module.exports = profileRouter;
