@@ -44,7 +44,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        setContentView(R.layout.registration_page);
+        setContentView(R.layout.activity_registration);
 
         //Grabs all the information from the text fields
         Button registerButton = findViewById(R.id.registerButton);
@@ -95,7 +95,6 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         }
 
-
         //Displays message if passwords do not match
         if (!password.equals(confirmPassword)) {
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -121,7 +120,6 @@ public class RegistrationActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 reply,
                                 Toast.LENGTH_LONG);
-
                         toast.show();
                         finish();
 
@@ -138,18 +136,12 @@ public class RegistrationActivity extends AppCompatActivity {
                             JSONObject data2 = new JSONObject(data.optString("err"));
                             message = data2.optString("message");
                         } catch (UnsupportedEncodingException e) {
-
                         } catch (JSONException e) {
-
                         }
-
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 message,
                                 Toast.LENGTH_LONG);
-
                         toast.show();
-                        System.out.println(message);
-
                     }
                 }) {
             //Load the parameters into the request body of the JSON object
@@ -166,6 +158,4 @@ public class RegistrationActivity extends AppCompatActivity {
         //Fires off to the backend
         requestQueue.add(stringRequest);
     }
-
-
 }

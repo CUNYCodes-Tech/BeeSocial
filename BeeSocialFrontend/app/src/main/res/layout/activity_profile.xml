@@ -55,12 +55,14 @@
                 android:textColor="#0E0D0D"
                 android:textSize="14sp"
                 android:textStyle="bold"/>
+
             <EditText
+                android:id="@+id/birthDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:inputType="text"/>
+                android:inputType="text" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -70,12 +72,13 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:inputType="text"/>
+
             <EditText
+                android:id="@+id/genderIdentity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                />
+                android:layout_marginRight="10dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,12 +88,13 @@
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:inputType="text"/>
+
             <EditText
+                android:id="@+id/favoriteFoods"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                />
+                android:layout_marginRight="10dp" />
 
 
         </LinearLayout>
