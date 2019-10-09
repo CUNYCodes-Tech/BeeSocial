@@ -8,4 +8,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="TestTextHere" />
+
+    <Button
+        android:id="@+id/profileRedirect"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Profile Button" />
 </LinearLayout>
