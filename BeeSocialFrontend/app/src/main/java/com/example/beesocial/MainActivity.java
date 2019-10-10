@@ -82,12 +82,15 @@ public class MainActivity extends AppCompatActivity {
                                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         String token;
+                        String id;
                         String reply = null;
                         try {
                             JSONObject data = new JSONObject(response);
                             reply = data.getString("status");
+                            id = data.getString("id");
                             token = data.getString("token");
                             editor.putString("token", token);
+                            editor.putString("id", id);
                             editor.apply();
                         } catch (JSONException e) {
                             e.printStackTrace();
