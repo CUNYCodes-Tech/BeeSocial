@@ -23,5 +23,6 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".ProfileActivity" />
+        <activity android:name=".DrawerActivity" />
     </application>
 </manifest>
