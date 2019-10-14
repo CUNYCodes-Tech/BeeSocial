@@ -1,0 +1,105 @@
+
+// post
+// for signup
+// http://localhost:8888/api/users/signup
+{
+	"username": "test1@gmail.com",
+	"password": "test1",
+	"firstname": "testfirst", //optional
+	"lastname": "testlast" //optional
+}
+// return
+{
+    "success": true,
+    "status": "Registration Successful!"
+}
+---------------------------------------------------
+
+// post
+// for login
+// http://localhost:8888/api/users/login
+{
+	"username": "test1@gmail.com",  // must be email format
+	"password": "test1"
+}
+//return
+{
+    "success": true,
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGE0YjE4ZDIyMWZhN2M5NjNhYzkwMWMiLCJpYXQiOjE1NzEwNzQ2MTIsImV4cCI6MTU3MTA3ODIxMn0.stHQPcoexgViieuuwgnjQ44Y9ZAUL9M3tSJ7ay7ZVmk",
+    "status": "You are successfully logged in!",
+    "id": "5da4b18d221fa7c963ac901c"
+}
+---------------------------------------------------
+
+
+// get
+// get profile using userId
+// http://localhost:8888/api/profile/:userId
+
+// return
+{
+    "firstname": "testfirst", 
+    "lastname": "testlast",
+    "sex": "",
+    "description": "",
+    "postedEvent": [],
+    "_id": "5da4b18d221fa7c963ac901c",
+    "username": "test1@gmail.com",
+    "__v": 0
+}
+---------------------------------------------------
+
+
+// put
+// update profile information
+// http://localhost:8888/api/profile/:userId
+{
+	"firstname": "changefirst", // must be alphabet
+	"lastname": "changelast",   // must be alphabet
+	"sex": "M",                 // optional
+	"description": "blablablabla" //optional
+}
+// return
+{
+    "firstname": "changefirst",
+    "lastname": "changelast",
+    "sex": "M",
+    "description": "blablablabla",
+    "postedEvent": [],
+    "_id": "5da4b18d221fa7c963ac901c",
+    "username": "test1@gmail.com",
+    "__v": 0
+}
+---------------------------------------------------
+
+
+// post
+// post a new event
+// http://localhost:8888/api/events
+// must logged in
+{
+	"name": "Dinner at Manhattan", // required
+	"createdBy": "5da4bbfee68b2dd22ef5630c",  
+	"location": {               // required
+		"type": "Point",
+		"coordinates": [40.7128, 73.9712]    // longitude, latitude
+	},
+	"time": "December 17, 1995 03:24:00",  // optional
+	"description": "final event"            // optional
+}
+
+// return the user profile
+{
+    "firstname": "testfirst",
+    "lastname": "testlast",
+    "sex": "",
+    "description": "",
+    "postedEvent": [
+        "5da4bef2635654d5c48790d0",  // list of event that he/she created
+        "5da4bf55a57bb7d60ae7f8be",
+        "5da4bfb69b8a94d65d0c2f0e"
+    ],
+    "_id": "5da4bbfee68b2dd22ef5630c",
+    "username": "test2@gmail.com",
+    "__v": 3
+}
