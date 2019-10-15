@@ -1,7 +1,18 @@
+# Documentation for routes
+## Contents:
+- [signup](##signup)
+- [login](##login)
+- [get user's profile](##getprofile)
+- [update user's profile](##updateprofile)
+- [post a new event](##postevent)
+- [get event by date](##geteventdate)
+___
 
-// post
-// for signup
-// http://localhost:8888/api/users/signup
+## signup
+- post
+- for signup
+> http://localhost:8888/api/users/signup
+```json
 {
 	"username": "test1@gmail.com",
 	"password": "test1",
@@ -13,11 +24,13 @@
     "success": true,
     "status": "Registration Successful!"
 }
----------------------------------------------------
-
-// post
-// for login
-// http://localhost:8888/api/users/login
+```
+___
+## login
+- post
+- for login
+> http://localhost:8888/api/users/login
+```json
 {
 	"username": "test1@gmail.com",  // must be email format
 	"password": "test1"
@@ -29,13 +42,15 @@
     "status": "You are successfully logged in!",
     "id": "5da4b18d221fa7c963ac901c"
 }
----------------------------------------------------
+```
+___
 
+## getprofile
+- get
+- get profile using userId
+> http://localhost:8888/api/profile/:userId
 
-// get
-// get profile using userId
-// http://localhost:8888/api/profile/:userId
-
+```json
 // return
 {
     "firstname": "testfirst", 
@@ -47,12 +62,14 @@
     "username": "test1@gmail.com",
     "__v": 0
 }
----------------------------------------------------
+```
+___
 
-
-// put
-// update profile information
-// http://localhost:8888/api/profile/:userId
+## updateprofile
+- put
+- update profile information
+> http://localhost:8888/api/profile/:userId
+```json
 {
 	"firstname": "changefirst", // must be alphabet
 	"lastname": "changelast",   // must be alphabet
@@ -70,13 +87,15 @@
     "username": "test1@gmail.com",
     "__v": 0
 }
----------------------------------------------------
+```
+___
 
-
-// post
-// post a new event
-// http://localhost:8888/api/events
-// must logged in
+## postevent
+- post
+- post a new event
+> http://localhost:8888/api/events
+- must logged in
+```json
 {
 	"name": "Dinner at Manhattan", // required
 	"createdBy": "5da4bbfee68b2dd22ef5630c",  
@@ -103,3 +122,37 @@
     "username": "test2@gmail.com",
     "__v": 3
 }
+```
+___
+
+## geteventdate
+- using date
+- specifying the date in the query param
+- return all the events end at later date
+- date is optional, if without date, will return the events end at later than current
+> http://localhost:8888/api/events?date=2019-10-10
+```json
+// return
+[
+    {
+        "interested": [],
+        "time": "2019-12-17T08:24:00.000Z",
+        "description": "final event",
+        "closed": false,
+        "_id": "5da5491f251bf4e2badc156c",
+        "name": "latest event",
+        "createdBy": "5da4bbfee68b2dd22ef5630c",
+        "location": {
+            "coordinates": [
+                40.7128,
+                73.9712
+            ],
+            "_id": "5da5491f251bf4e2badc156d",
+            "type": "Point"
+        },
+        "createdAt": "2019-10-15T04:20:47.757Z",
+        "updatedAt": "2019-10-15T04:20:47.757Z",
+        "__v": 0
+    }
+]
+```
