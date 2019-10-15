@@ -23,6 +23,13 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".DrawerActivity" />
+        <activity android:name=".MenuActivity">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+
     </application>
 </manifest>

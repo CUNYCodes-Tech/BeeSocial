@@ -24,16 +24,17 @@ public class LandingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         //Switches the view to the profile page once the button is clicked
-        TextView menu = findViewById(R.id.menuRedirect);
+        TextView menu = findViewById(R.id.drawer);
         menu.setMovementMethod(LinkMovementMethod.getInstance());
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LandingActivity.this, DrawerActivity.class);
+                Intent intent = new Intent(LandingActivity.this, MenuActivity.class);
                 startActivity(intent);
             }
         });
+
+
     }
 }

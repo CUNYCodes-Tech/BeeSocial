@@ -16,8 +16,10 @@
         android:text="Profile Button" />
 
     <Button
-        android:id="@+id/menuRedirect"
+        android:id="@+id/drawer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Menu Button" />
+
+
 </LinearLayout>

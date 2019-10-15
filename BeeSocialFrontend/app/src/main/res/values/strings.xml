@@ -13,4 +13,6 @@
     <string name="forgot_login">Forgot Login?</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="beesociallogo">BeeSocialLogo</string>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
 </resources>
