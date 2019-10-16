@@ -15,12 +15,26 @@
             android:icon="@drawable/ic_edit"
             android:title="Edit Event" />
         <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_settings"
-            android:title="Settings" />
-        <item
-            android:id="@+id/logout"
-            android:icon="@drawable/ic_exit"
-            android:title="Logout" />
+            android:id="@+id/chats"
+            android:icon="@drawable/ic_chat"
+            android:title="Chats" />
+
     </group>
+
+
+ <item android:title="Controls">
+        <menu>
+            <group>
+            <item
+                android:id="@+id/settings"
+                android:icon="@drawable/ic_settings"
+                android:title="Settings" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_exit"
+                android:title="Logout" />
+
+    </group>
+</menu>
+        </item>
 </menu>
