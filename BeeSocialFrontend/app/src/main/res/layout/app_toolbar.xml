@@ -8,18 +8,22 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:background="@drawable/side_nav_bar"
         android:fitsSystemWindows="false"
 
-        android:background="@drawable/side_nav_bar">
+      >
 
        <androidx.appcompat.widget.Toolbar
-           android:layout_width="match_parent"
+           android:layout_width="75dp"
            android:layout_height="?attr/actionBarSize"
            android:theme="@style/AppTheme"
+         
 
-           android:id="@+id/toolbar"
-        />
+           android:id="@+id/toolbar"/>
+
+
+
+
     </com.google.android.material.appbar.AppBarLayout>
 
 
