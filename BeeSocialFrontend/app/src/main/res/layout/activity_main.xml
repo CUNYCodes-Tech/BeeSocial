@@ -10,10 +10,10 @@
 
 
     <ImageView
-        android:layout_width="403dp"
-        android:layout_height="173dp"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
         android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/bee"
+        app:srcCompat="@drawable/chowmatelogo"
         android:contentDescription="@string/beesociallogo" />
 
     <EditText
@@ -43,9 +43,9 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
-        android:background="#57616B"
+        android:background="@drawable/side_nav_bar"
         android:text="@string/login"
-        android:textColor="#FFEC8B"
+        android:textColor="#3A2608"
         android:textStyle="bold" />
 
     <LinearLayout
@@ -59,6 +59,7 @@
             android:layout_height="35dp"
             android:layout_marginTop="15dp"
             android:text="@string/new_users"
+            android:textColor="#3A2608"
             android:textStyle="bold" />
 
         <TextView
@@ -68,6 +69,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="15dp"
             android:text="@string/forgot_login"
+            android:textColor="#3A2608"
             android:textStyle="bold"
             android:layout_marginStart="30dp" />
     </LinearLayout>
