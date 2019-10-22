@@ -10,10 +10,11 @@ var authenticate = require('../middleware/auth');
 eventRouter.get('/events/location', (req, res, next) => {
     // get the user location from the query param
     // find all the events within that location
-    const long = req.query.longitude
-    const lati = req.query.latitude
-    const minD = req.query.minDistance
-    const maxD = req.query.maxDistance
+    const long = req.query.longitude;
+    const lati = req.query.latitude;
+    const minD = req.query.minDistance;
+    const maxD = req.query.maxDistance;
+    const d = new Date();
     Event.find({
         location: {
             $near: {
@@ -22,28 +23,35 @@ eventRouter.get('/events/location', (req, res, next) => {
                 $maxDistance: maxD
             }
         },
-        closed
+        time: {
+            $gte: d
+        }
     })
         .then((events) => {
-
+            console.log(events);
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(events);
         })
         .catch((err) => {
-
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({ err: err });
         })
 
 });
 
 // find all event by name
 eventRouter.get('/events/name', (req, res, next) => {
-    // get the user location from the query param
-    // find all the events within that location
-    const long = req.query.longitude
-    const lati = req.query.latitude
-    const minD = req.query.minDistance
-    const maxD = req.query.maxDistance
+    const name = req.query.name;
+    const d = new Date();
     Event.find({
+        name: {
+            $regex: name,
+            $options: 'i'
+        },
         time: {
-            $gte: new Date()
+            $gte: d
         }
     })
         .then((events) => {

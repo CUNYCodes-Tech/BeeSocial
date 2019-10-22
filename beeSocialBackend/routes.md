@@ -156,3 +156,36 @@ ___
     }
 ]
 ```
+
+## geteventname
+- using name
+> http://localhost:8888/api/events/name?name=latest
+```json
+//return
+[
+    {
+        "interested": [],
+        "time": "2019-12-17T08:24:00.000Z",
+        "description": "final event",
+        "closed": false,
+        "_id": "5da5491f251bf4e2badc156c",
+        "name": "latest event",
+        "createdBy": "5da4bbfee68b2dd22ef5630c",
+        "location": {
+            "coordinates": [
+                40.7128,
+                73.9712
+            ],
+            "_id": "5da5491f251bf4e2badc156d",
+            "type": "Point"
+        },
+        "createdAt": "2019-10-15T04:20:47.757Z",
+        "updatedAt": "2019-10-15T04:20:47.757Z",
+        "__v": 0
+    }
+]
+```
+
+## geteventlocation
+- searching an event by using location
+> http://localhost:8888/api/events?longitude=40.7128&latitude=73.9712
