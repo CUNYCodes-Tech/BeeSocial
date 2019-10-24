@@ -132,6 +132,8 @@ eventRouter.post('/events', authenticate.verifyUser, (req, res, next) => {
 // update event
 eventRouter.put('', authenticate.verifyUser, (req, res, next) => {
     // get the neccessary information and update
+    const update = req.body;
+    Event.findByIdAndUpdate();
 });
 
 // show interest event

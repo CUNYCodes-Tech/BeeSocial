@@ -9,11 +9,14 @@
     android:gravity="center_horizontal">
 
     <ImageView
-        android:layout_width="403dp"
-        android:layout_height="173dp"
+        android:layout_width="400dp"
+        android:layout_height="200dp"
         android:layout_marginTop="50dp"
-        app:srcCompat="@drawable/bee"
+        app:srcCompat="@drawable/chowmatelogo"
         android:contentDescription="TODO" />
+
+
+
 
     <EditText
         android:id="@+id/emailAddress"
@@ -83,6 +86,7 @@
         android:textAllCaps="false"
         android:textStyle="bold"
         android:textSize="20dp"
-        android:textColor="#0E0D0D"/>
+        android:textColor="#3A2608"/>
+
 
 </LinearLayout>

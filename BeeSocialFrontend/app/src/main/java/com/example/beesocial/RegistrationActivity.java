@@ -1,3 +1,12 @@
+/**
+ * Sources used:
+ * https://www.tutlane.com/tutorial/android/android-login-and-registration-screen-design
+ * https://stackoverflow.com/questions/35390928/how-to-send-json-object-to-the-server-from-my-android-app
+ * https://www.simplifiedcoding.net/android-volley-tutorial/
+ * https://www.kompulsa.com/how-to-send-a-post-request-in-android/
+ * https://stackoverflow.com/questions/26167631/how-to-access-the-contents-of-an-error-response-in-volley
+ */
+
 package com.example.beesocial;
 
 import android.os.Bundle;
@@ -21,16 +30,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
-
-
-/**
- * Sources used:
- * https://www.tutlane.com/tutorial/android/android-login-and-registration-screen-design
- * https://stackoverflow.com/questions/35390928/how-to-send-json-object-to-the-server-from-my-android-app
- * https://www.simplifiedcoding.net/android-volley-tutorial/
- * https://www.kompulsa.com/how-to-send-a-post-request-in-android/
- * https://stackoverflow.com/questions/26167631/how-to-access-the-contents-of-an-error-response-in-volley
- */
 
 public class RegistrationActivity extends AppCompatActivity {
     //Global variables to be used throughout the activity
