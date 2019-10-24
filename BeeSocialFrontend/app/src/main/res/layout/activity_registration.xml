@@ -15,6 +15,9 @@
         app:srcCompat="@drawable/chowmatelogo"
         android:contentDescription="TODO" />
 
+
+
+
     <EditText
         android:id="@+id/emailAddress"
         android:layout_width="180dp"
@@ -84,5 +87,6 @@
         android:textStyle="bold"
         android:textSize="20dp"
         android:textColor="#3A2608"/>
+
 
 </LinearLayout>
