@@ -25,5 +25,8 @@
   "devDependencies": {
     "morgan": "^1.9.1",
     "nodemon": "^1.19.2"
+  },
+  "engines": {
+    "node": "10.16.3"
   }
 }
