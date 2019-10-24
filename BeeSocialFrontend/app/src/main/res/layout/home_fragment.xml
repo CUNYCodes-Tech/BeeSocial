@@ -6,10 +6,19 @@
     android:layout_height="match_parent"
     android:background="#FFFF">
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 145b7cb7b27c7ae9a5250a6c129442c782921ac3
     <com.google.android.gms.maps.MapView
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+<<<<<<< HEAD
 
+
+
+
+=======
+>>>>>>> 145b7cb7b27c7ae9a5250a6c129442c782921ac3
 </RelativeLayout>

@@ -30,7 +30,10 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
+<<<<<<< HEAD
+=======
 
+>>>>>>> 145b7cb7b27c7ae9a5250a6c129442c782921ac3
 public class HomeFrag extends Fragment implements OnMapReadyCallback {
     MapView mMapView;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_LOCATION = 1;

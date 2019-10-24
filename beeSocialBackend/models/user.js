@@ -22,11 +22,7 @@ var User = new Schema({
     description: {
       type: String,
       default: ""
-    },
-    postedEvent: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Event'
-    }]
+    }
 });
 User.plugin(passportLocalMongoose)
 
