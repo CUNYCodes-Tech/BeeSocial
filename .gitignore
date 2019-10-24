@@ -315,3 +315,13 @@ fabric.properties
 .DS_Store
 data
 .vscode/
+
+BeeSocialFrontend/.idea/libraries/Gradle__com_google_android_gms_play_services_base_17_0_0_aar.xml
+BeeSocialFrontend/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml
+BeeSocialFrontend/.idea/libraries/Gradle__com_google_android_gms_play_services_location_15_0_1_aar.xml
+BeeSocialFrontend/.idea/libraries/Gradle__com_google_android_gms_play_services_maps_17_0_0_aar.xml
+BeeSocialFrontend/.idea/libraries/Gradle__com_google_android_gms_play_services_places_placereport_15_0_1_aar.xml
+BeeSocialFrontend/.idea/libraries/Gradle__com_google_android_gms_play_services_tasks_17_0_0_aar.xml
+BeeSocialFrontend/.idea/caches/build_file_checksums.ser
+BeeSocialFrontend/.idea/caches/gradle_models.ser
+BeeSocialFrontend/.idea/
