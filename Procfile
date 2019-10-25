@@ -1,0 +1,1 @@
+web: cd beeSocialBackend && npm start
