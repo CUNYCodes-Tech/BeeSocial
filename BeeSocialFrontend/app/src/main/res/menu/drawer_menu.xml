@@ -13,7 +13,7 @@
         <item
             android:id="@+id/editevent"
             android:icon="@drawable/ic_edit"
-            android:title="Edit Event" />
+            android:title="Event Status" />
         <item
             android:id="@+id/chats"
             android:icon="@drawable/ic_chat"

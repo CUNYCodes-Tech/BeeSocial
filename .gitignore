@@ -315,6 +315,7 @@ fabric.properties
 .DS_Store
 data
 .vscode/
+.env
 
 BeeSocialFrontend/.idea/libraries/Gradle__com_google_android_gms_play_services_base_17_0_0_aar.xml
 BeeSocialFrontend/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml

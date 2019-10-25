@@ -20,10 +20,10 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/card"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:layout_marginTop="140dp">
+            android:layout_marginTop="30dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -63,59 +63,63 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp" />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Date of your event?"
-                    android:textColor="#0E0D0D"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:inputType="date"/>
-
-                <DatePicker
-                    android:theme="@style/DatePicker"
-                    android:id="@+id/datePicker"
-                    android:datePickerMode="spinner"
-                    android:spinnersShown="true"
-                    android:calendarViewShown="false"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal" />
 
 
                 <TextView
+                    android:id="@+id/dateText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:text="Time of your event?"
+                    android:text="Date"
                     android:textColor="#3C3111"
                     android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:inputType="time"/>
-                <TimePicker
-                    android:layout_width="250dp"
-                    android:layout_height="100dp"
-                    android:id="@+id/timeOfEvent"
-                    android:timePickerMode="spinner"
-                    android:layout_centerHorizontal="true"/>
+                    android:textStyle="bold"/> />
 
+                <TextView
+                    android:id="@+id/pickDate"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/dateText"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/date_selector"
+                    android:text="Click to add date" />
+                <TextView
+                    android:id="@+id/timeText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="Time"
+                    android:textColor="#3C3111"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/> />
+
+                <TextView
+                    android:id="@+id/pickTime"
+                    android:layout_width="match_parent"
+                    android:layout_margin="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/timeText"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/date_selector"
+                    android:text="Click to add time" />
+
+                
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
 
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/card"
-            android:layout_alignLeft="@+id/card"
-            android:layout_alignRight="@+id/card"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="35dp"
-            android:elevation="1dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card"
+                android:layout_alignLeft="@+id/card"
+                android:layout_alignRight="@+id/card"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="35dp"
+                android:elevation="1dp">
 
             <Button
                 android:id="@+id/createEventSubmit"
@@ -128,20 +132,11 @@
                 android:textSize="20dp"
                 android:textColor="#0E0D0D"/>
         </RelativeLayout>
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/card"
-            android:layout_alignLeft="@+id/card"
-            android:layout_alignRight="@+id/card"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginRight="35dp"/>
 
         </RelativeLayout>
-
     </ScrollView>
+</RelativeLayout>
 
-        </RelativeLayout>
+
 
 
