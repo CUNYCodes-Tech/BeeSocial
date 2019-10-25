@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 var CONFIG = require('./config.json');
-var PORT = process.env.PORT || parseInt(CONFIG.server.port, 10);
+// var PORT = process.env.PORT || parseInt(CONFIG.server.port, 10);
+var PORT = process.env.PORT || 3000;
+
 var HOST_NAME = process.env.HOST || CONFIG.server.hostName;
 // var tokenMiddleware = require('./middleware/token');
 var passport = require('passport');
