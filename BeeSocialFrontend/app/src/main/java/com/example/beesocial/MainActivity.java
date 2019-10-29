@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loginUser();
-                Intent intent = new Intent(MainActivity.this, LandingActivity.class);
-                startActivity(intent);
+                loginUser();
+//                Intent intent = new Intent(MainActivity.this, LandingActivity.class);
+//                startActivity(intent);
             }
         });
     }
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString("token", token);
                             editor.putString("id", id);
                             editor.apply();
+                            System.out.println(token);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
