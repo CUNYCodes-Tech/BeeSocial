@@ -50,6 +50,7 @@ import static android.content.ContentValues.TAG;
 public class CreateEventFrag extends Fragment {
 
     EditText appNameOfEvent;
+    Place eventLocation;
     LatLng placeCoordinates;
     EditText appPickDate;
     EditText appPickTime;
@@ -82,7 +83,7 @@ public class CreateEventFrag extends Fragment {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                placeCoordinates = place.getLatLng();
+                eventLocation = place;
             }
 
             @Override
@@ -114,6 +115,41 @@ public class CreateEventFrag extends Fragment {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String ID = sharedPreferences.getString("id", "");
 
+        //Checks if the event name is empty
+        if (appNameOfEvent.getText().toString().isEmpty() ||
+                appNameOfEvent.equals(null)) {
+            Toast toast = Toast.makeText(getContext(),
+                    "Please enter a name for the event!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
+        //Checks if the event location is null
+        if (eventLocation == null) {
+            Toast toast = Toast.makeText(getContext(),
+                    "Please select a location!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
+        //Checks if the event date is blank
+        if (appPickDate.getText().toString().isEmpty() ||
+                appPickDate.getText().toString().equals(null)) {
+            Toast toast = Toast.makeText(getContext(),
+                    "Date is blank!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
+        //Checks if the event time is blank
+        if (appPickTime.getText().toString().isEmpty() ||
+                appPickTime.getText().toString().equals(null)) {
+            Toast toast = Toast.makeText(getContext(),
+                    "Time is blank!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
         //Grabs the user information from the text fields
         String nameOfEvent = appNameOfEvent.getText().toString().trim();
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
@@ -133,15 +169,15 @@ public class CreateEventFrag extends Fragment {
             params.put("createdBy", ID);
             params.put("time", eventTimeDate);
             locationBody.put("type", "Point");
-            coordinates.put(placeCoordinates.longitude);
-            coordinates.put(placeCoordinates.latitude);
+            coordinates.put(eventLocation.getLatLng().longitude);
+            coordinates.put(eventLocation.getLatLng().latitude);
             locationBody.put("coordinates", coordinates);
             params.put("location", locationBody);
         } catch (JSONException e) {
 
         }
 
-        String url = "http://10.0.2.2:8888/api/events"; //URL where the information will be sent
+        String url = "https://chowmate.herokuapp.com/api/events"; //URL where the information will be sent
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, params,
