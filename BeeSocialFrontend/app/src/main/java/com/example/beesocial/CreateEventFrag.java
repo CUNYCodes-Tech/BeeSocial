@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.api.Status;
@@ -49,6 +50,7 @@ import static android.content.ContentValues.TAG;
 public class CreateEventFrag extends Fragment {
 
     EditText appNameOfEvent;
+    Place eventLocation;
     LatLng placeCoordinates;
     EditText appPickDate;
     EditText appPickTime;
@@ -81,8 +83,7 @@ public class CreateEventFrag extends Fragment {
             @Override
             public void onPlaceSelected(Place place) {
                 // TODO: Get info about the selected place.
-                Log.i(TAG, "Place: " + place.getName() + ", " + place.getId());
-                placeCoordinates = place.getLatLng();
+                eventLocation = place;
             }
 
             @Override
@@ -92,7 +93,7 @@ public class CreateEventFrag extends Fragment {
             }
         });
 
-
+        //Sets the behavior for when the button is clicked
         createEventSubmit.setOnClickListener(
                 new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -103,13 +104,51 @@ public class CreateEventFrag extends Fragment {
                 }
         );
         return v;
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void submitEvent() {
         //Creates the request queue
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+        //Gets the user ID from Shared Preferences
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String ID = sharedPreferences.getString("id", "");
+
+        //Checks if the event name is empty
+        if (appNameOfEvent.getText().toString().isEmpty() ||
+                appNameOfEvent.equals(null)) {
+            Toast toast = Toast.makeText(getContext(),
+                    "Please enter a name for the event!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
+        //Checks if the event location is null
+        if (eventLocation == null) {
+            Toast toast = Toast.makeText(getContext(),
+                    "Please select a location!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
+        //Checks if the event date is blank
+        if (appPickDate.getText().toString().isEmpty() ||
+                appPickDate.getText().toString().equals(null)) {
+            Toast toast = Toast.makeText(getContext(),
+                    "Date is blank!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
+
+        //Checks if the event time is blank
+        if (appPickTime.getText().toString().isEmpty() ||
+                appPickTime.getText().toString().equals(null)) {
+            Toast toast = Toast.makeText(getContext(),
+                    "Time is blank!", Toast.LENGTH_SHORT);
+            toast.show();
+            return;
+        }
 
         //Grabs the user information from the text fields
         String nameOfEvent = appNameOfEvent.getText().toString().trim();
@@ -119,42 +158,41 @@ public class CreateEventFrag extends Fragment {
         LocalTime time = LocalTime.parse(appPickTime.getText().toString().trim(), timeFormat);
         LocalDateTime eventTimeDate = LocalDateTime.of(date, time);
 
+        //Sets up the JSON Objects to be sent.
+        JSONObject params = new JSONObject();
         JSONObject locationBody = new JSONObject();
         JSONArray coordinates = new JSONArray();
+
+        //Adds parameters to the appropriate objects
         try {
+            params.put("name", nameOfEvent);
+            params.put("createdBy", ID);
+            params.put("time", eventTimeDate);
             locationBody.put("type", "Point");
-            coordinates.put(placeCoordinates.longitude);
-            coordinates.put(placeCoordinates.latitude);
+            coordinates.put(eventLocation.getLatLng().longitude);
+            coordinates.put(eventLocation.getLatLng().latitude);
             locationBody.put("coordinates", coordinates);
+            params.put("location", locationBody);
         } catch (JSONException e) {
 
         }
 
-        System.out.println(locationBody.toString());
-        //Gets the user ID from Shared Preferences
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-        String ID = sharedPreferences.getString("id", "");
+        String url = "https://chowmate.herokuapp.com/api/events"; //URL where the information will be sent
 
-        String url = "http://10.0.2.2:8888/api/events"; //URL where the information will be sent
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                (Request.Method.POST, url, params,
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast toast = Toast.makeText(getContext(),
-                                "Event created!",
-                                Toast.LENGTH_LONG);
-                        toast.show();
-                    }
-                },
-
-                new Response.ErrorListener() {
+                            }
+                        }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
 
                     }
                 }) {
-
             //Creates a header with the authentication token
             @Override
             public Map<String, String> getHeaders() {
@@ -165,23 +203,8 @@ public class CreateEventFrag extends Fragment {
                 headers.put("Authorization", "Bearer " + token);
                 return headers;
             }
-
-            //Creates the parameters for the request body
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                //put params here
-                params.put("name", nameOfEvent);
-                params.put("createdBy", ID);
-                params.put("time", eventTimeDate.toString());
-                params.put("location", locationBody.toString());
-//                params.put("coordinates", longitude + ", " + latitude);
-//                params.put("longitude", longitude);
-                System.out.println(params);
-                return params;
-            }
         };
-        requestQueue.add(stringRequest);
+        requestQueue.add(jsonObjectRequest);
     }
 
 }
