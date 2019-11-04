@@ -101,7 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
             toast.show();
             return;
         }
-        String url = "http://10.0.2.2:8888/api/users/signup"; //URL where the information will be sent
+        String url = "https://chowmate.herokuapp.com/api/users/signup"; //URL where the information will be sent
 
         //Sends the saved information if passwords match to the server
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,

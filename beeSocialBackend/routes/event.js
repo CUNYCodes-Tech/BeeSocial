@@ -5,6 +5,8 @@ eventRouter.use(bodyParser.json());
 var User = require('../models/user');
 var Event = require('../models/event');
 var authenticate = require('../middleware/auth');
+var jwt = require('jsonwebtoken');
+
 
 // find all the event by location
 eventRouter.get('/events/location', (req, res, next) => {
@@ -130,19 +132,120 @@ eventRouter.post('/events', authenticate.verifyUser, (req, res, next) => {
 });
 
 // update event
-eventRouter.put('', authenticate.verifyUser, (req, res, next) => {
+eventRouter.put('/events/update/:eventId', authenticate.verifyUser, (req, res, next) => {
     // get the neccessary information and update
+    const id = req.params.eventId;
     const update = req.body;
-    Event.findByIdAndUpdate();
+    if (update.hasOwnProperty('_id')) {
+        // cannot update the id
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({ err: { "status": 500, "success": false, "message": "Cannot update the id" } });
+    }
+    if (update.hasOwnProperty('createdBy')) {
+        // cannot update the author
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({ err: { "status": 500, "success": false, "message": "Cannot update the author" } });
+    }
+    if (update.hasOwnProperty('interested')) {
+        // cannot update person who is interest
+        res.statusCode = 500;
+        res.setHeader('Content-Type', 'application/json');
+        res.json({ err: { "status": 500, "success": false, "message": "Cannot update the interested person" } });
+    }
+    Event.findByIdAndUpdate(id, update, { new: true })
+        .then((event) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(event);
+        }).catch((err) => {
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({ err: err });
+        });
 });
 
 // show interest event
-eventRouter.put('', authenticate.verifyUser, (req, res, next) => {
+eventRouter.put('/events/addInterest/:eventId', authenticate.verifyUser, (req, res, next) => {
     // find the event, push the userid
+    var currentUser = req.headers;
+    const token = currentUser.authorization.split(" ")[1];
+    let userId = jwt.decode(token)._id;
+    const eventId = req.params.eventId;
+    Event.findById(eventId)
+        .then((event) => {
+            let interested = event.interested;
+            let newInterested = [];
+            let exist = false;
+            for (let i = 0; i < interested.length; i++) {
+                if (interested[i] === userId) {
+                    exist = true;
+                    // send respond
+                    res.statusCode = 500;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json({ "status": 500, "success": false, "message": "You are already in the list" });
+                }else {
+                    newInterested.push(interested[i]);
+                }
+            }
+            if(!exist) {
+                newInterested.push(userId);
+            }
+            const update = {
+                interested: newInterested
+            }
+            return Event.findByIdAndUpdate(eventId, update, {new: true});
+        }).then((event) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(event);
+        })
+        .catch((err) => {
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({ err: err });
+        })
 });
 // withdraw interest event
-eventRouter.put('', authenticate.verifyUser, (req, res, next) => {
+eventRouter.put('/events/removeInterest/:eventId', authenticate.verifyUser, (req, res, next) => {
     // find the event update the interest
+    let currentUser = req.headers;
+    const token = currentUser.authorization.split(" ")[1];
+    let userId = jwt.decode(token)._id;
+    const eventId = req.params.eventId;
+    Event.findById(eventId)
+        .then((event) => {
+            let interested = event.interested;
+            let newInterested = [];
+            let removed = false;
+            for (let i = 0; i < interested.length; i++) {
+                if (interested[i] == userId) {
+                    removed = true;
+                }else {
+                    newInterested.push(interested[i]);
+                }
+            }
+            if(!removed) {
+                // send respond
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({ "status": 500, "success": false, "message": "You are not even on the list" });
+            }
+            const update = {
+                interested: newInterested
+            }
+            return Event.findByIdAndUpdate(eventId, update, {new: true});
+        }).then((event) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(event);
+        })
+        .catch((err) => {
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({ err: err });
+        })
 });
 
 

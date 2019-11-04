@@ -1,4 +1,9 @@
 # Documentation for routes
+
+## Notes:
+- Sometime the port will be at 3000 if you are runnign it locally
+- 
+
 ## Contents:
 - [signup](##signup)
 - [login](##login)
@@ -189,3 +194,62 @@ ___
 ## geteventlocation
 - searching an event by using location
 > http://localhost:8888/api/events?longitude=40.7128&latitude=73.9712
+
+## showInterestInAnEvent
+- put
+- need the event id
+> http://localhost:3000/api/events/addInterest/5da5491f251bf4e2badc156c
+
+```json
+// return the updated event
+{
+    "interested": [
+        "5da4b18d221fa7c963ac901c"
+    ],
+    "time": "2019-12-17T08:24:00.000Z",
+    "description": "final event",
+    "closed": false,
+    "_id": "5da5491f251bf4e2badc156c",
+    "name": "latest event",
+    "createdBy": "5da4bbfee68b2dd22ef5630c",
+    "location": {
+        "coordinates": [
+            40.7128,
+            73.9712
+        ],
+        "_id": "5da5491f251bf4e2badc156d",
+        "type": "Point"
+    },
+    "createdAt": "2019-10-15T04:20:47.757Z",
+    "updatedAt": "2019-11-04T02:34:31.721Z",
+    "__v": 0
+}
+```
+
+## removeInterestInAnEvent
+- put
+- withdraw user from the interest list of the event
+> http://localhost:3000/api/events/removeInterest/5da5491f251bf4e2badc156c
+```json
+// return the updated event as well
+{
+    "interested": [],
+    "time": "2019-12-17T08:24:00.000Z",
+    "description": "final event",
+    "closed": false,
+    "_id": "5da5491f251bf4e2badc156c",
+    "name": "latest event",
+    "createdBy": "5da4bbfee68b2dd22ef5630c",
+    "location": {
+        "coordinates": [
+            40.7128,
+            73.9712
+        ],
+        "_id": "5da5491f251bf4e2badc156d",
+        "type": "Point"
+    },
+    "createdAt": "2019-10-15T04:20:47.757Z",
+    "updatedAt": "2019-11-04T02:35:49.119Z",
+    "__v": 0
+}
+```

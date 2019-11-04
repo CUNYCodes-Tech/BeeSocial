@@ -56,9 +56,9 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loginUser();
-                Intent intent = new Intent(MainActivity.this, LandingActivity.class);
-                startActivity(intent);
+                loginUser();
+//                Intent intent = new Intent(MainActivity.this, LandingActivity.class);
+//                startActivity(intent);
             }
         });
     }
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         String emailAddress = appEmailAddress.getText().toString().trim();
         String password = appPassword.getText().toString().trim();
 
-        String url = "http://10.0.2.2:8888/api/users/login"; //URL where the information will be sent
+        String url = "https://chowmate.herokuapp.com/api/users/login"; //URL where the information will be sent
 
         //Sets the behaviors for the POST request sending the user info
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                             editor.putString("token", token);
                             editor.putString("id", id);
                             editor.apply();
+                            System.out.println(token);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -101,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                                 reply,
                                 Toast.LENGTH_LONG);
                         toast.show();
-                        Intent intent = new Intent(MainActivity.this, LandingActivity.class);
+                        Intent intent = new Intent(MainActivity.this, MenuActivity.class);
                         startActivity(intent);
                         //finish();
                     }

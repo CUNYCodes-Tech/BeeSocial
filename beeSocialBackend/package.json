@@ -4,7 +4,7 @@
   "description": "backend for bee social",
   "main": "index.js",
   "scripts": {
-    "start": "npm install && node index",
+    "start": "node index",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
