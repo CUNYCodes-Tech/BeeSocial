@@ -169,9 +169,9 @@ eventRouter.put('/events/update/:eventId', authenticate.verifyUser, (req, res, n
 // show interest event
 eventRouter.put('/events/addInterest/:eventId', authenticate.verifyUser, (req, res, next) => {
     // find the event, push the userid
-    let userId = req.headers;
+    var currentUser = req.headers;
     const token = currentUser.authorization.split(" ")[1];
-    userId = jwt.decode(token)._id;
+    let userId = jwt.decode(token)._id;
     const eventId = req.params.eventId;
     Event.findById(eventId)
         .then((event) => {
@@ -210,9 +210,9 @@ eventRouter.put('/events/addInterest/:eventId', authenticate.verifyUser, (req, r
 // withdraw interest event
 eventRouter.put('/events/removeInterest/:eventId', authenticate.verifyUser, (req, res, next) => {
     // find the event update the interest
-    let userId = req.headers;
+    let currentUser = req.headers;
     const token = currentUser.authorization.split(" ")[1];
-    userId = jwt.decode(token)._id;
+    let userId = jwt.decode(token)._id;
     const eventId = req.params.eventId;
     Event.findById(eventId)
         .then((event) => {
@@ -220,9 +220,8 @@ eventRouter.put('/events/removeInterest/:eventId', authenticate.verifyUser, (req
             let newInterested = [];
             let removed = false;
             for (let i = 0; i < interested.length; i++) {
-                if (interested[i] === userId) {
+                if (interested[i] == userId) {
                     removed = true;
-                    
                 }else {
                     newInterested.push(interested[i]);
                 }
