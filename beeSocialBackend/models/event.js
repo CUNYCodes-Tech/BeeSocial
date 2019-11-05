@@ -26,6 +26,10 @@ const eventSchema = new schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
     }],
+    participant: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
     //Note that longitude comes first in a GeoJSON coordinate array, not latitude.
     location: { 
         type: pointSchema,

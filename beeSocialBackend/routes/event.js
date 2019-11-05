@@ -176,10 +176,11 @@ eventRouter.put('/events/addInterest/:eventId', authenticate.verifyUser, (req, r
     Event.findById(eventId)
         .then((event) => {
             let interested = event.interested;
+            let par = event.participant;
             let newInterested = [];
             let exist = false;
             for (let i = 0; i < interested.length; i++) {
-                if (interested[i] === userId) {
+                if (interested[i] == userId) {
                     exist = true;
                     // send respond
                     res.statusCode = 500;
@@ -187,6 +188,16 @@ eventRouter.put('/events/addInterest/:eventId', authenticate.verifyUser, (req, r
                     res.json({ "status": 500, "success": false, "message": "You are already in the list" });
                 }else {
                     newInterested.push(interested[i]);
+                }
+            }
+            // make sure this user is not a participant
+            for (let i = 0; i < par.length; i++) {
+                if (par[i] == userId) {
+                    exist = true;
+                    // send respond
+                    res.statusCode = 500;
+                    res.setHeader('Content-Type', 'application/json');
+                    res.json({ "status": 500, "success": false, "message": "You are one of the participant already" });
                 }
             }
             if(!exist) {
@@ -234,6 +245,53 @@ eventRouter.put('/events/removeInterest/:eventId', authenticate.verifyUser, (req
             }
             const update = {
                 interested: newInterested
+            }
+            return Event.findByIdAndUpdate(eventId, update, {new: true});
+        }).then((event) => {
+            res.statusCode = 200;
+            res.setHeader('Content-Type', 'application/json');
+            res.json(event);
+        })
+        .catch((err) => {
+            res.statusCode = 500;
+            res.setHeader('Content-Type', 'application/json');
+            res.json({ err: err });
+        })
+});
+
+// invite the person into the event
+eventRouter.put('/events/invite/:eventId', authenticate.verifyUser, (req, res, next) => {
+    // should get the person id from the body
+    // find the event update the interest
+    let person = req.body.person; // person will be the person that we are inviting
+    let currentUser = req.headers;
+    const token = currentUser.authorization.split(" ")[1];
+    let userId = jwt.decode(token)._id; // userid will be the creator of the event
+    const eventId = req.params.eventId; // the event id
+    // find the event first
+    Event.findById(eventId)
+        .then((event) => {
+            let interested = event.interested;
+            let par = event.participant;
+            let newInterested = [];
+            let removed = false;
+            for (let i = 0; i < interested.length; i++) {
+                if (interested[i] == userId) {
+                    removed = true;
+                }else {
+                    newInterested.push(interested[i]);
+                }
+            }
+            if(!removed) {
+                // send respond
+                res.statusCode = 500;
+                res.setHeader('Content-Type', 'application/json');
+                res.json({ "status": 500, "success": false, "message": "Person is not on the list" });
+            }
+            par.push(person);
+            const update = {
+                interested: newInterested,
+                participant: par
             }
             return Event.findByIdAndUpdate(eventId, update, {new: true});
         }).then((event) => {
