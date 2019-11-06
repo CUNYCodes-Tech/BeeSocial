@@ -1,6 +1,5 @@
 /**
  * Sources used:
- *
  */
 package com.example.beesocial;
 
@@ -77,7 +76,7 @@ public class ProfileActivity extends AppCompatActivity {
         //Gets the user ID from Shared Preferences and creates a path to update
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String ID = sharedPreferences.getString("id", "");
-        String url = "http://10.0.2.2:8888/api/profile/" + ID; //URL where the information will be sent
+        String url = "https://chowmate.herokuapp.com/api/profile/" + ID; //URL where the information will be sent
 
         StringRequest stringRequest = new StringRequest(Request.Method.PUT, url,
                 new Response.Listener<String>() {
@@ -104,7 +103,6 @@ public class ProfileActivity extends AppCompatActivity {
                 SharedPreferences sharedPreferences =
                         PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 String token = sharedPreferences.getString("token", "");
-                System.out.println(token);
                 headers.put("Authorization", "Bearer " + token);
                 return headers;
             }

@@ -45,7 +45,8 @@
         <activity android:name=".RegistrationActivity" />
         <activity android:name=".LandingActivity" />
         <activity android:name=".ProfileActivity" />
-        <activity android:name=".MenuActivity"
+        <activity
+            android:name=".MenuActivity"
 
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
