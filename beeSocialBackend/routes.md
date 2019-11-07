@@ -229,6 +229,8 @@ ___
 ## removeInterestInAnEvent
 - put
 - withdraw user from the interest list of the event
+- this is done by the user himself
+- need the event's id in the route
 > http://localhost:3000/api/events/removeInterest/5da5491f251bf4e2badc156c
 ```json
 // return the updated event as well
@@ -251,5 +253,17 @@ ___
     "createdAt": "2019-10-15T04:20:47.757Z",
     "updatedAt": "2019-11-04T02:35:49.119Z",
     "__v": 0
+}
+```
+
+## addding a person to the event
+- put
+- move a person from interest list to the participant list
+- taking event's id as the route param
+- the person's id that you want to add in the body
+> http://localhost:3000/api/events/invite/5da5491f251bf4e2badc156c
+```json
+{
+	"person": "5da4b18d221fa7c963ac901c"
 }
 ```

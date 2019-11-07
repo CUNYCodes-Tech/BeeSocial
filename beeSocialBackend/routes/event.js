@@ -259,6 +259,7 @@ eventRouter.put('/events/removeInterest/:eventId', authenticate.verifyUser, (req
         })
 });
 
+
 // invite the person into the event
 eventRouter.put('/events/invite/:eventId', authenticate.verifyUser, (req, res, next) => {
     // should get the person id from the body
@@ -284,9 +285,12 @@ eventRouter.put('/events/invite/:eventId', authenticate.verifyUser, (req, res, n
             }
             if(!removed) {
                 // send respond
-                res.statusCode = 500;
-                res.setHeader('Content-Type', 'application/json');
-                res.json({ "status": 500, "success": false, "message": "Person is not on the list" });
+                // res.statusCode = 500;
+                // res.setHeader('Content-Type', 'application/json');
+                // res.end({ "status": 500, "success": false, "message": "Person is not on the list" });
+                return res.status(500).json({
+                    "status": 500, "success": false, "message": "Person is not on the list"
+                })
             }
             par.push(person);
             const update = {
@@ -296,13 +300,16 @@ eventRouter.put('/events/invite/:eventId', authenticate.verifyUser, (req, res, n
             return Event.findByIdAndUpdate(eventId, update, {new: true});
         }).then((event) => {
             res.statusCode = 200;
-            res.setHeader('Content-Type', 'application/json');
+            //res.setHeader('Content-Type', 'application/json');
             res.json(event);
         })
         .catch((err) => {
-            res.statusCode = 500;
-            res.setHeader('Content-Type', 'application/json');
-            res.json({ err: err });
+            // res.statusCode = 500;
+            // res.setHeader('Content-Type', 'application/json');
+            // res.json({ err: err });
+            return res.status(500).json({
+                err
+            })
         })
 });
 
