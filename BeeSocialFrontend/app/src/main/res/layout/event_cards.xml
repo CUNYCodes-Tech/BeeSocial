@@ -32,6 +32,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Event Title"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold"
             android:layout_toEndOf="@+id/item_image"
             android:layout_toRightOf="@+id/item_image"
@@ -64,13 +65,13 @@
             android:layout_below="@+id/item_date" />
 
         <Button
-            android:id="@+id/edit_button"
+            android:id="@+id/status_button"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_below="@+id/item_time"
             android:layout_alignParentRight="true"
             android:background="@color/colorPrimaryDark"
-            android:text="Edit Event"
+            android:text="Event Status"
             android:textAllCaps="false"
             android:textColor="@color/colorPrimary" />
 
@@ -81,7 +82,7 @@
             android:layout_below="@+id/item_time"
             android:layout_alignParentRight="true"
             android:layout_marginRight="100dp"
-            android:layout_toLeftOf="@+id/edit_button"
+            android:layout_toLeftOf="@+id/status_button"
             android:background="@color/colorPrimaryDark"
             android:text="Delete Event"
             android:textAllCaps="false"
