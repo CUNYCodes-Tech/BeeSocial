@@ -96,7 +96,12 @@ eventRouter.get('/events', (req, res, next) => {
 
 // create and event using post
 eventRouter.post('/events', authenticate.verifyUser, (req, res, next) => {
+    let currentUser = req.headers;
+    const token = currentUser.authorization.split(" ")[1];
+    let userId = jwt.decode(token)._id;
     let newEvent = req.body;
+    newEvent.createdBy = userId;
+    console.log(newEvent);
     // newEvent.time = new Date(req.body.time);
     Event.create(newEvent)
         .then((event) => {
@@ -311,6 +316,27 @@ eventRouter.put('/events/invite/:eventId', authenticate.verifyUser, (req, res, n
                 err
             })
         })
+});
+
+eventRouter.get('/events/mine', authenticate.verifyUser, (req, res, next) => {
+    let currentUser = req.headers;
+    const token = currentUser.authorization.split(" ")[1];
+    let userId = jwt.decode(token)._id; // userid will be the creator of the event
+    User.findById(userId)
+    .populate('postedEvent')
+    .then((user) => {
+        console.log(user);
+        res.status(200).json(
+            user
+        );
+    })
+    .catch((err) => {
+        res.status(500).json({
+            err: err,
+            success: false,
+            message: "Fail"
+        })
+    })
 });
 
 
