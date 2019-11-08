@@ -1,3 +1,12 @@
+/**
+ * Sources used:
+ * https://www.tutlane.com/tutorial/android/android-login-and-registration-screen-design
+ * https://stackoverflow.com/questions/35390928/how-to-send-json-object-to-the-server-from-my-android-app
+ * https://www.simplifiedcoding.net/android-volley-tutorial/
+ * https://www.kompulsa.com/how-to-send-a-post-request-in-android/
+ * https://stackoverflow.com/questions/26167631/how-to-access-the-contents-of-an-error-response-in-volley
+ */
+
 package com.example.beesocial;
 
 import android.os.Bundle;
@@ -22,16 +31,6 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
-
-/**
- * Sources used:
- * https://www.tutlane.com/tutorial/android/android-login-and-registration-screen-design
- * https://stackoverflow.com/questions/35390928/how-to-send-json-object-to-the-server-from-my-android-app
- * https://www.simplifiedcoding.net/android-volley-tutorial/
- * https://www.kompulsa.com/how-to-send-a-post-request-in-android/
- * https://stackoverflow.com/questions/26167631/how-to-access-the-contents-of-an-error-response-in-volley
- */
-
 public class RegistrationActivity extends AppCompatActivity {
     //Global variables to be used throughout the activity
     EditText appFirstName;
@@ -44,7 +43,7 @@ public class RegistrationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        setContentView(R.layout.registration_page);
+        setContentView(R.layout.activity_registration);
 
         //Grabs all the information from the text fields
         Button registerButton = findViewById(R.id.registerButton);
@@ -95,7 +94,6 @@ public class RegistrationActivity extends AppCompatActivity {
             }
         }
 
-
         //Displays message if passwords do not match
         if (!password.equals(confirmPassword)) {
             Toast toast = Toast.makeText(getApplicationContext(),
@@ -103,7 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
             toast.show();
             return;
         }
-        String url = "http://10.0.2.2:8888/api/users/signup"; //URL where the information will be sent
+        String url = "https://chowmate.herokuapp.com/api/users/signup"; //URL where the information will be sent
 
         //Sends the saved information if passwords match to the server
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
@@ -121,7 +119,6 @@ public class RegistrationActivity extends AppCompatActivity {
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 reply,
                                 Toast.LENGTH_LONG);
-
                         toast.show();
                         finish();
 
@@ -138,18 +135,12 @@ public class RegistrationActivity extends AppCompatActivity {
                             JSONObject data2 = new JSONObject(data.optString("err"));
                             message = data2.optString("message");
                         } catch (UnsupportedEncodingException e) {
-
                         } catch (JSONException e) {
-
                         }
-
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 message,
                                 Toast.LENGTH_LONG);
-
                         toast.show();
-                        System.out.println(message);
-
                     }
                 }) {
             //Load the parameters into the request body of the JSON object
@@ -166,6 +157,4 @@ public class RegistrationActivity extends AppCompatActivity {
         //Fires off to the backend
         requestQueue.add(stringRequest);
     }
-
-
 }

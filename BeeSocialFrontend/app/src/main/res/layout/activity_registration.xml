@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegistrationActivity"
+    android:orientation="vertical"
+    android:gravity="center_horizontal">
+
+    <ImageView
+        android:layout_width="400dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        app:srcCompat="@drawable/chowmatelogo"
+        android:contentDescription="TODO" />
+
+
+
+
+    <EditText
+        android:id="@+id/emailAddress"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/name"
+        android:hint="@string/emailaddress"
+        android:importantForAutofill="no"
+        android:inputType="textEmailAddress"
+        android:drawableStart="@drawable/name" />
+
+
+    <EditText
+        android:id="@+id/firstName"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/name"
+        android:hint="@string/first_name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:drawableStart="@drawable/name" />
+
+
+    <EditText
+        android:id="@+id/lastName"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableLeft="@drawable/name"
+        android:hint="@string/last_name"
+        android:importantForAutofill="no"
+        android:inputType="textPersonName"
+        android:drawableStart="@drawable/name" />
+
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:drawableLeft="@drawable/password"
+        android:hint="@string/password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword"
+        android:drawableStart="@drawable/password" />
+
+    <EditText
+        android:id="@+id/confirmPassword"
+        android:layout_width="180dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/password"
+        android:drawableLeft="@drawable/password"
+        android:hint="@string/confirm_password"
+        android:importantForAutofill="no"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/registerButton"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:background="@drawable/side_nav_bar"
+        android:text="Register"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:textColor="#3A2608"/>
+
+
+</LinearLayout>
