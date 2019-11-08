@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -44,11 +45,10 @@ public class EditEventFrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         v = inflater.inflate(R.layout.edit_fragment, container, false);
         items = new ArrayList<>();
         mRecycler = v.findViewById(R.id.recyclerView);
-        mAdapter= new Adapter(getContext(),items);
+        mAdapter = new Adapter(getContext(), items);
         mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycler.setAdapter(mAdapter);
 
@@ -60,42 +60,40 @@ public class EditEventFrag extends Fragment {
 
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState){
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
     }
 
     private void jsonrequest() {
-        request = new JsonArrayRequest(JSON_URL, new Response.Listener<JSONArray>() {
+        request = new JsonArrayRequest(Request.Method.GET, JSON_URL, null,
+                new Response.Listener<JSONArray>() {
+
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        JSONObject jsonObject = null;
+
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                jsonObject = response.getJSONObject(i);
+                                Items item = new Items();
+                                item.setTitle(jsonObject.getString("name"));
+                                item.setLocation(jsonObject.getString("location"));
+                                //item.setDate(jsonObject.getString("date"));
+                                //item.setTime(jsonObject.getString("time"));
+                                items.add(item);
 
 
-            @Override
-            public void onResponse(JSONArray response) {
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
 
-                JSONObject jsonObject = null;
+                        setuprecycler(items);
 
-                for (int i = 0; i < response.length(); i++) {
-                    try {
-                        jsonObject = response.getJSONObject(i);
-                        Items item = new Items();
-                        item.setTitle(jsonObject.getString("name"));
-                        item.setLocation(jsonObject.getString("location"));
-                        item.setDate(jsonObject.getString("date"));
-                        item.setTime(jsonObject.getString("time"));
-                        items.add(item);
-
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
-
-                setuprecycler(items);
-
-            }
-        }, new Response.ErrorListener() {
+                }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -103,7 +101,7 @@ public class EditEventFrag extends Fragment {
 
         });
 
-        requestQ = Volley.newRequestQueue(EditEventFrag.this);
+        requestQ = Volley.newRequestQueue(getContext());
         requestQ.add(request);
 
 
@@ -111,8 +109,9 @@ public class EditEventFrag extends Fragment {
 
     private void setuprecycler(ArrayList<Items> items) {
 
-        mAdapter = new Adapter(context, items);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
+        mAdapter = new Adapter(getContext(), items);
+        LinearLayoutManager linearLayoutManager =
+                new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecycler.setLayoutManager(linearLayoutManager);
 
     }

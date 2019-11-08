@@ -106,7 +106,6 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
                         try {
                             for (int i = 0; i < response.length(); i++) {
                                 if (!response.getJSONObject(i).getBoolean("closed")) {
-                                    System.out.println("Event added");
                                     JSONArray coordinates = response.getJSONObject(i)
                                             .getJSONObject("location")
                                             .getJSONArray("coordinates");
