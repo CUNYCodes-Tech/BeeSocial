@@ -72,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         String password = appPassword.getText().toString().trim();
 
         String url = "https://chowmate.herokuapp.com/api/users/login"; //URL where the information will be sent
+//        String url = "http://10.0.2.2:8888/api/users/login";
 
         //Sets the behaviors for the POST request sending the user info
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
