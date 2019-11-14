@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/clicked_card"
+    android:background="@drawable/side_nav_bar"
+    android:layout_margin="15dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/clicked_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:text="Event Title"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/clicked_item_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clicked_item_title"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Event Location"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/clicked_item_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clicked_item_location"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Event Date"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/clicked_item_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clicked_item_date"
+            android:gravity="center"
+            android:padding="5sp"
+            android:text="Event Time"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/clicked_user_interested"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clicked_item_time"
+            android:drawableLeft="@drawable/ic_add"
+            android:layout_centerInParent="true"
+            android:padding="5sp"
+            android:text="ChowMates Interested"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

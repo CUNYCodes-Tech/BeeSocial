@@ -17,8 +17,8 @@
         android:padding="16dp" >
 
         <TextView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="130dp"
+            android:layout_height="120dp"
             android:id="@+id/item_image"
             android:background="@drawable/chowmate"
             android:layout_alignParentStart="true"
@@ -32,10 +32,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Event Title"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
             android:layout_toEndOf="@+id/item_image"
             android:layout_toRightOf="@+id/item_image"
             android:layout_alignParentTop="true"
-            android:textSize="30sp" />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/item_location"
@@ -62,6 +64,20 @@
             android:layout_toRightOf="@+id/item_image"
             android:layout_below="@+id/item_date" />
 
+
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_below="@+id/item_time"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="4dp"
+
+            android:layout_marginRight="5dp"
+            android:background="@color/colorPrimaryDark"
+            android:text="Delete Event"
+            android:textAllCaps="false"
+            android:textColor="@color/colorPrimary" />
 
 
     </RelativeLayout>

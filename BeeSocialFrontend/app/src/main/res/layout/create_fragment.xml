@@ -35,7 +35,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="Give your event a name.(Dinner, Lunch, Happy Hour, Brunch...ect.)"
+                        android:text="Name of event (Dinner, Lunch, Happy Hour, Brunch...ect)."
                         android:textColor="#3C3111"
                         android:textSize="14sp"
                         android:textStyle="bold" />
@@ -53,7 +53,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:inputType="textMultiLine"
-                        android:text="Where is your event happening? Start typing address below..."
+                        android:text="Event Location"
                         android:textColor="#3C3111"
                         android:textSize="14sp"
                         android:textStyle="bold" />
