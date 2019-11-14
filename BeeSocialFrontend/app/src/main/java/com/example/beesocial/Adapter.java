@@ -24,6 +24,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     ArrayList<Items> items;
     Context mContext;
     Dialog mDialog;
+    ArrayList<Users> users;
 
     public Adapter(Context mContext, ArrayList<Items> items) {
         this.items = items;
@@ -48,10 +49,12 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
               TextView dialog_loc= (TextView) mDialog.findViewById(R.id.clicked_item_location);
               TextView dialog_date= (TextView) mDialog.findViewById(R.id.clicked_item_date);
               TextView dialog_time=(TextView) mDialog.findViewById(R.id.clicked_item_time);
+
               dialog_title.setText(items.get(myHolder.getAdapterPosition()).getTitle());
               dialog_loc.setText(items.get(myHolder.getAdapterPosition()).getLocation());
               dialog_date.setText(items.get(myHolder.getAdapterPosition()).getDate());
               dialog_time.setText(items.get(myHolder.getAdapterPosition()).getTime());
+
               Toast.makeText(mContext,"Clicked"+String.valueOf(myHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
               mDialog.show();
           }

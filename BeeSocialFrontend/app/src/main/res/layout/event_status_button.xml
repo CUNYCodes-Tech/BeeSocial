@@ -57,15 +57,16 @@
 
         <TextView
             android:id="@+id/clicked_user_interested"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/clicked_item_time"
-            android:drawableRight="@drawable/ic_chat"
-            android:gravity="center_horizontal"
+            android:drawableLeft="@drawable/ic_add"
+            android:layout_centerInParent="true"
             android:padding="5sp"
-            android:text="ChowMate Interested"
+            android:text="ChowMates Interested"
             android:textSize="15sp"
             android:textStyle="bold" />
+
 
 
     </RelativeLayout>
