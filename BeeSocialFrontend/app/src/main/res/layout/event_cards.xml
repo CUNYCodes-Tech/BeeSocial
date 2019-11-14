@@ -37,7 +37,7 @@
             android:layout_toEndOf="@+id/item_image"
             android:layout_toRightOf="@+id/item_image"
             android:layout_alignParentTop="true"
-            android:textSize="30sp" />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/item_location"
@@ -64,16 +64,6 @@
             android:layout_toRightOf="@+id/item_image"
             android:layout_below="@+id/item_date" />
 
-        <Button
-            android:id="@+id/status_button"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_below="@+id/item_time"
-            android:layout_alignParentRight="true"
-            android:background="@color/colorPrimaryDark"
-            android:text="Event Status"
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/delete_button"
@@ -81,8 +71,9 @@
             android:layout_height="30dp"
             android:layout_below="@+id/item_time"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="100dp"
-            android:layout_toLeftOf="@+id/status_button"
+            android:layout_marginTop="4dp"
+
+            android:layout_marginRight="5dp"
             android:background="@color/colorPrimaryDark"
             android:text="Delete Event"
             android:textAllCaps="false"
