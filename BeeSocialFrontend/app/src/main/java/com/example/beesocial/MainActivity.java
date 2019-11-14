@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                     // and saves the authentication token provided by the server
                     @Override
                     public void onResponse(String response) {
+                        //Opens up the Shared Preferences in order to save the
+                        //authentication token and the user ID edit
                         SharedPreferences sharedPreferences =
                                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         String id;
                         String reply = null;
                         try {
+                            //Grabs the information from the backend
                             JSONObject data = new JSONObject(response);
                             reply = data.getString("status");
                             id = data.getString("id");
@@ -99,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+//
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 reply,
                                 Toast.LENGTH_LONG);

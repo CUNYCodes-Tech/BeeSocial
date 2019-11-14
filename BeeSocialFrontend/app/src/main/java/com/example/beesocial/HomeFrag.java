@@ -1,16 +1,21 @@
 package com.example.beesocial;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -20,6 +25,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -39,6 +45,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 public class HomeFrag extends Fragment implements OnMapReadyCallback {
@@ -54,10 +62,12 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.home_fragment, container, false);
+
+        //Sets up everything needed for the map and its markers to display and function
         mMapView = v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
-        mMapView.getMapAsync(this); //this is important
+        mMapView.getMapAsync(this);
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(getActivity());
         return v;
     }
@@ -91,8 +101,40 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
 
         //Gets all open events and sets markers
         getOpenEvents();
+
+        mMap.setOnInfoWindowClickListener(
+                new GoogleMap.OnInfoWindowClickListener() {
+                    @Override
+                    public void onInfoWindowClick(Marker marker) {
+                        Toast.makeText(getContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
+                        //Grabs the user's ID from the shared preferences
+                        SharedPreferences sharedPreferences =
+                                PreferenceManager.getDefaultSharedPreferences(getContext());
+                        String userID = sharedPreferences.getString("id", "");
+                        String url = "https://chowmate.herokuapp.com/api/events/addInterest/" + userID;
+
+                        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        Toast.makeText(getContext(), "Interested in event!", Toast.LENGTH_SHORT).show();
+                                    }
+                                },
+                                new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+                                });
+                    }
+                }
+        );
     }
 
+    //Gets all open events from the backend and displays markers for each one
+    //provided that the event does not belong to the user
     private void getOpenEvents() {
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
@@ -101,17 +143,31 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
+                    @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
+                            //Grabs the user's ID from the shared preferences
+                            SharedPreferences sharedPreferences =
+                                    PreferenceManager.getDefaultSharedPreferences(getContext());
+                            String userID = sharedPreferences.getString("id", "");
+
+                            //Goes through the events and filters through them
                             for (int i = 0; i < response.length(); i++) {
-                                if (!response.getJSONObject(i).getBoolean("closed")) {
+                                if ((!response.getJSONObject(i).getBoolean("closed")) &&
+                                        (!response.getJSONObject(i).getString("createdBy").equals(userID))) {
+
+                                    //Grabs the date and time for the event
+                                    java.util.Date date = Date.from(Instant.parse(response.getJSONObject(i).getString("time")));
+
+                                    //Sets a marker
                                     JSONArray coordinates = response.getJSONObject(i)
                                             .getJSONObject("location")
                                             .getJSONArray("coordinates");
                                     mMap.addMarker(new MarkerOptions()
                                             .position(new LatLng(coordinates.getDouble(1), coordinates.getDouble(0)))
-                                            .title(response.getJSONObject(i).getString("name")));
+                                            .title(response.getJSONObject(i).getString("name")))
+                                            .setSnippet(date.toString());
                                 }
                             }
                         } catch (JSONException e) {
