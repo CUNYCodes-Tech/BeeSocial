@@ -25,6 +25,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -40,6 +41,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,7 +49,9 @@ import org.json.JSONObject;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HomeFrag extends Fragment implements OnMapReadyCallback {
     MapView mMapView;
@@ -106,28 +110,48 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
                 new GoogleMap.OnInfoWindowClickListener() {
                     @Override
                     public void onInfoWindowClick(Marker marker) {
-                        Toast.makeText(getContext(), marker.getTitle(), Toast.LENGTH_SHORT).show();
                         //Grabs the user's ID from the shared preferences
                         SharedPreferences sharedPreferences =
                                 PreferenceManager.getDefaultSharedPreferences(getContext());
                         String userID = sharedPreferences.getString("id", "");
-                        String url = "https://chowmate.herokuapp.com/api/events/addInterest/" + userID;
+                        String url = "https://chowmate.herokuapp.com/api/events/addInterest/" + marker.getTag();
+
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("Interested", userID);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
                         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
 
-                        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                                new Response.Listener<String>() {
+                        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT,
+                                url, jsonObject,
+                                new Response.Listener<JSONObject>() {
                                     @Override
-                                    public void onResponse(String response) {
+                                    public void onResponse(JSONObject response) {
                                         Toast.makeText(getContext(), "Interested in event!", Toast.LENGTH_SHORT).show();
                                     }
                                 },
+
                                 new Response.ErrorListener() {
                                     @Override
                                     public void onErrorResponse(VolleyError error) {
-
+                                        Toast.makeText(getContext(), "Error!", Toast.LENGTH_SHORT).show();
                                     }
-                                });
+                                }) {
+                            //Creates a header with the authentication token
+                            @Override
+                            public Map<String, String> getHeaders() {
+                                Map<String, String> headers = new HashMap<>();
+                                SharedPreferences sharedPreferences =
+                                        PreferenceManager.getDefaultSharedPreferences(getContext());
+                                String token = sharedPreferences.getString("token", "");
+                                headers.put("Authorization", "Bearer " + token);
+                                return headers;
+                            }
+                        };
+                        requestQueue.add(jsonObjectRequest);
                     }
                 }
         );
@@ -164,10 +188,11 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
                                     JSONArray coordinates = response.getJSONObject(i)
                                             .getJSONObject("location")
                                             .getJSONArray("coordinates");
-                                    mMap.addMarker(new MarkerOptions()
+                                    Marker marker = mMap.addMarker(new MarkerOptions()
                                             .position(new LatLng(coordinates.getDouble(1), coordinates.getDouble(0)))
-                                            .title(response.getJSONObject(i).getString("name")))
-                                            .setSnippet(date.toString());
+                                            .title(response.getJSONObject(i).getString("name")));
+                                    marker.setSnippet(date.toString());
+                                    marker.setTag(response.getJSONObject(i).getString("_id"));
                                 }
                             }
                         } catch (JSONException e) {
