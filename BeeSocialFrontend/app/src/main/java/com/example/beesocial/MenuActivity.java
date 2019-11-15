@@ -28,6 +28,8 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_menu);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
 
 
         //drawer menu settings
@@ -76,34 +78,6 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
     }
 
 
-
-  /*  @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-      //  Fragment fragmentClass=null;
-        switch(menuItem.getItemId()){
-            case R.id.home:
-                Toast.makeText(this,"Home Btn Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.createevent:
-                Toast.makeText(this,"Create Event Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.editevent:
-                Toast.makeText(this,"Edit Event Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.chats:
-                Toast.makeText(this,"Chats Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.settings:
-                Toast.makeText(this,"Settings Clicked", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.logout:
-                Toast.makeText(this,"Logout Clicked", Toast.LENGTH_SHORT).show();
-                break;
-
-        }
-        return false;
-    }
-*/
 
 
 }

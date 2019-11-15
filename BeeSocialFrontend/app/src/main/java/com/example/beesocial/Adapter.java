@@ -15,7 +15,6 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -55,7 +54,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
               dialog_date.setText(items.get(myHolder.getAdapterPosition()).getDate());
               dialog_time.setText(items.get(myHolder.getAdapterPosition()).getTime());
 
-              Toast.makeText(mContext,"Clicked"+String.valueOf(myHolder.getAdapterPosition()),Toast.LENGTH_SHORT).show();
               mDialog.show();
           }
       });

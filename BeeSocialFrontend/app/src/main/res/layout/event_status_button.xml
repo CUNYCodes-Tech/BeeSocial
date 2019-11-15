@@ -32,6 +32,7 @@
             android:layout_below="@+id/clicked_item_title"
             android:gravity="center"
             android:padding="5sp"
+            android:drawableLeft="@drawable/location"
             android:text="Event Location"
             android:textSize="15sp" />
 
@@ -43,6 +44,7 @@
             android:gravity="center"
             android:padding="5sp"
             android:text="Event Date"
+            android:drawableLeft="@drawable/date"
             android:textSize="15sp" />
 
         <TextView

@@ -16,7 +16,8 @@
         android:label="ChowMate"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
+        android:theme="@style/AppTheme.NoActionBar"
+
         android:usesCleartextTraffic="true">
         <activity android:name=".EventStatus"></activity>
         <!--

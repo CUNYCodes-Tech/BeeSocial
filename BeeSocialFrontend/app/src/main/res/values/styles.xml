@@ -3,16 +3,25 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">#312208</item>
         <item name="colorPrimaryDark">#3C2A10</item>
         <item name="colorAccent">#3C280B</item>
         <item name="drawerArrowStyle">@style/DrawerIcon</item>
-       <item name="android:actionBarStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorPrimaryDark">#3C2A10</item>
+    </style>
+
+
+
+    <style name="HiddenTitleTheme" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
     </style>
 
 
