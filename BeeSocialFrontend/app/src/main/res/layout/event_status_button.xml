@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:id="@+id/clicked_card"
     android:background="@drawable/side_nav_bar"
     android:layout_margin="15dp">
@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:paddingTop="20dp">
 
         <TextView
@@ -57,17 +57,14 @@
             android:text="Event Time"
             android:textSize="15sp" />
 
-        <TextView
-            android:id="@+id/clicked_user_interested"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/clicked_item_time"
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/userRecycler"
             android:drawableLeft="@drawable/ic_add"
-            android:layout_centerInParent="true"
-            android:padding="5sp"
-            android:text="ChowMates Interested"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:layout_below="@+id/clicked_item_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
 
 

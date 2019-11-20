@@ -45,4 +45,10 @@
         <item name="android:datePickerStyle">@android:style/Widget.DatePicker</item>
     </style>
 
+    <style name="floatingAction" >="@style/Widget.MaterialComponents.FloatingActionButton">
+
+
+
+</style>
+
 </resources>

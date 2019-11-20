@@ -23,7 +23,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
     ArrayList<Items> items;
     Context mContext;
     Dialog mDialog;
-    ArrayList<Users> users;
+   // ArrayList<Users> users;
+
 
     public Adapter(Context mContext, ArrayList<Items> items) {
         this.items = items;
@@ -48,11 +49,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
               TextView dialog_loc= (TextView) mDialog.findViewById(R.id.clicked_item_location);
               TextView dialog_date= (TextView) mDialog.findViewById(R.id.clicked_item_date);
               TextView dialog_time=(TextView) mDialog.findViewById(R.id.clicked_item_time);
+              RecyclerView list_users= (RecyclerView) mDialog.findViewById(R.id.userRecycler);
+
 
               dialog_title.setText(items.get(myHolder.getAdapterPosition()).getTitle());
               dialog_loc.setText(items.get(myHolder.getAdapterPosition()).getLocation());
               dialog_date.setText(items.get(myHolder.getAdapterPosition()).getDate());
               dialog_time.setText(items.get(myHolder.getAdapterPosition()).getTime());
+            //  list_users.setLayoutManager(items.get(myHolder.getAdapterPosition()).getUsers());
+
 
               mDialog.show();
           }
@@ -90,6 +95,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         TextView event_loc;
         TextView event_date;
         TextView event_time;
+        TextView users_int;
 
         public Holder(@NonNull View itemView) {
             super(itemView);
@@ -99,6 +105,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
             event_loc = (TextView) itemView.findViewById(R.id.item_location);
             event_date = (TextView) itemView.findViewById(R.id.item_date);
             event_time = (TextView) itemView.findViewById(R.id.item_time);
+
         }
 
 
@@ -118,6 +125,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
         public void setTime(String time) {
             event_time.setText(time);
         }
+
+        public void setUsers_int(String user){ users_int.setText(user);}
 
 
     }
