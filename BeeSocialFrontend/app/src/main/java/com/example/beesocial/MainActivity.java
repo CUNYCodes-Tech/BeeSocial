@@ -57,8 +57,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loginUser();
-//                Intent intent = new Intent(MainActivity.this, LandingActivity.class);
-//                startActivity(intent);
             }
         });
     }
@@ -102,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-//
+
                         Toast toast = Toast.makeText(getApplicationContext(),
                                 reply,
                                 Toast.LENGTH_LONG);

@@ -5,14 +5,11 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
-
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.Nullable;
-
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -29,14 +26,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,11 +36,8 @@ import java.util.Locale;
 public class EditEventFrag extends Fragment {
 
     private RecyclerView mRecycler;
-    private Adapter mAdapter;
-    private ArrayList<Items> items;
-    private final String JSON_URL = "https://chowmate.herokuapp.com/api/events";
-    private JsonArrayRequest request;
-    private RequestQueue requestQ;
+    private EventAdapter mEventAdapter;
+    private ArrayList<Event> events;
     View v;
 
     public EditEventFrag() {
@@ -61,13 +49,13 @@ public class EditEventFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.edit_fragment, container, false);
-        items = new ArrayList<>();
+        events = new ArrayList<>();
         mRecycler = v.findViewById(R.id.recyclerView);
-        mAdapter = new Adapter(getContext(), items);
+        mEventAdapter = new EventAdapter(getContext(), events);
         mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecycler.setAdapter(mAdapter);
+        mRecycler.setAdapter(mEventAdapter);
 
-        jsonrequest();
+        getEvents();
 
         return v;
     }
@@ -76,12 +64,11 @@ public class EditEventFrag extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
     }
 
-    private void jsonrequest() {
-        request = new JsonArrayRequest(Request.Method.GET, JSON_URL, null,
+    private void getEvents() {
+        String url = "https://chowmate.herokuapp.com/api/events";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
 
                     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -94,31 +81,33 @@ public class EditEventFrag extends Fragment {
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 jsonObject = response.getJSONObject(i);
-                                Items item = new Items();
-                                item.setTitle(jsonObject.getString("name"));
+                                Event event = new Event();
+                                event.setTitle(jsonObject.getString("name"));
+
                                 JSONArray coordinates = jsonObject.getJSONObject("location")
                                         .getJSONArray("coordinates");
                                 address = geocoder.getFromLocation(coordinates.getDouble(1),
                                         coordinates.getDouble(0), 1);
-                                item.setLocation(address.get(0).getAddressLine(0));
-                                //LocalDateTime date;
-                                LocalDateTime time;
+                                event.setLocation(address.get(0).getAddressLine(0));
 
-                                java.util.Date date = Date.from(Instant.parse(jsonObject.getString("time")));
-                                item.setDate(date.toString());
+                                Date date = Date.from(Instant.parse(jsonObject.getString("time")));
+                                event.setDate(date.toString());
 
-                                //item.setDate(jsonObject.getString("date"));
-                                //item.setTime(jsonObject.getString("time"));
-                                items.add(item);
-
+                                ArrayList<User> users = new ArrayList<>();
+                                JSONArray interestedUsers = jsonObject.getJSONArray("interested");
+                                for (int j = 0; j < interestedUsers.length(); j++) {
+                                    users.add(new User());
+                                    users.get(j).setUserID(interestedUsers.getString(j));
+                                    System.out.println(users.get(j).getUserID());
+                                }
+                                event.setUsers(users);
+                                events.add(event);
 
                             } catch (JSONException | IOException e) {
                                 e.printStackTrace();
                             }
                         }
-
-                        setuprecycler(items);
-
+                        setUpRecycler(events);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -128,22 +117,18 @@ public class EditEventFrag extends Fragment {
 
         });
 
-        requestQ = Volley.newRequestQueue(getContext());
+        RequestQueue requestQ = Volley.newRequestQueue(getContext());
         requestQ.add(request);
-
 
     }
 
-    private void setuprecycler(ArrayList<Items> items) {
-
-        mAdapter = new Adapter(getContext(), items);
+    private void setUpRecycler(ArrayList<Event> events) {
+        mEventAdapter = new EventAdapter(getContext(), events);
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecycler.setLayoutManager(linearLayoutManager);
 
     }
-
-
 
 
 }
