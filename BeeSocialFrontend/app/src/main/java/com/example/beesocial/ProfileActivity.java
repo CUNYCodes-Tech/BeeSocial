@@ -10,6 +10,8 @@ import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -21,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -34,6 +37,9 @@ public class ProfileActivity extends AppCompatActivity {
     EditText appGenderIdentity;
     EditText appFavoriteFoods;
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,8 @@ public class ProfileActivity extends AppCompatActivity {
         appBirthDate = findViewById(R.id.birthDate);
         appGenderIdentity = findViewById(R.id.genderIdentity);
         appFavoriteFoods = findViewById(R.id.favoriteFoods);
+
+
 
         //Sets the behavior for when the button is clicked
         profileCreate.setOnClickListener(
@@ -119,4 +127,8 @@ public class ProfileActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
+
+
+
+
 }

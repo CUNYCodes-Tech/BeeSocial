@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:orientation="vertical">
 
 
@@ -17,13 +18,19 @@
             android:layout_height="match_parent"
             android:layout_gravity="center">
 
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/card"
                 android:layout_width="match_parent"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="15dp"
+                app:contentPadding="2dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="30dp"
                 android:layout_marginRight="40dp">
+
+\
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -35,8 +42,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
-                        android:text="Name of Event (Dinner, Lunch, Happy Hour, Brunch...ect)."
-                        android:textColor="#3C3111"
+                        android:text="Name of Event (Dinner, Happy Hour, Brunch ect)."
+                        android:textColor="#0E0D0D"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -44,8 +51,7 @@
                         android:id="@+id/nameOfEvent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp"
+                        android:layout_margin="10dp"
                         android:inputType="text" />
 
                     <TextView
@@ -54,7 +60,7 @@
                         android:layout_margin="10dp"
                         android:inputType="textMultiLine"
                         android:text="Event Location"
-                        android:textColor="#3C3111"
+                        android:textColor="#0E0D0D"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -63,8 +69,7 @@
                         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="10dp" />
+                        android:layout_margin="10dp"/>
 
                     <TextView
                         android:id="@+id/dateText"
@@ -72,7 +77,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Date"
-                        android:textColor="#3C3111"
+                        android:textColor="#0E0D0D"
                         android:textSize="14sp"
                         android:textStyle="bold" />
                     />
@@ -82,10 +87,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/dateText"
-                        android:layout_margin="5dp"
-                        android:layout_marginBottom="10dp"
+                        android:layout_margin="10dp"
                         android:background="@drawable/date_selector"
-                        tools:text="Click to add date" />
+                      />
 
                     <TextView
                         android:id="@+id/timeText"
@@ -93,7 +97,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Time"
-                        android:textColor="#3C3111"
+                        android:textColor="#0E0D0D"
                         android:textSize="14sp"
                         android:textStyle="bold" />
                     />
@@ -103,11 +107,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/timeText"
-                        android:layout_margin="5dp"
-                        android:layout_marginBottom="10dp"
-                        android:background="@drawable/date_selector"
-                        tools:text="Click to add time" />
+                        android:layout_margin="10dp"
 
+                        android:background="@drawable/date_selector"
+
+                        android:textColor="@color/colorPrimaryDark"/>
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -130,10 +134,9 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/side_nav_bar"
                     android:text="Create"
-                    android:textAllCaps="false"
                     android:textColor="#0E0D0D"
                     android:textSize="20dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
             </RelativeLayout>
 
         </RelativeLayout>
