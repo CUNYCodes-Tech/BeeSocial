@@ -8,6 +8,30 @@
     android:orientation="vertical">
 
 
+    <TextView
+        android:id="@+id/welcomeUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome ChowMate."
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:textSize="30sp"
+        android:textColor="#0E0D0D"/>
+    <TextView
+        android:id="@+id/createProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:text="Lets get chowing!"
+        android:layout_below="@+id/welcomeUser"
+        android:textStyle="bold"
+        android:layout_centerHorizontal="true"
+        android:textSize="17sp"
+        android:textColor="#0E0D0D" />
+
+
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -22,7 +46,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/card"
                 android:layout_width="match_parent"
-                android:layout_margin="15dp"
+                android:layout_marginTop="140dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="15dp"
                 app:contentPadding="2dp"

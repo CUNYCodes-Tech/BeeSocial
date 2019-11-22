@@ -41,22 +41,22 @@ import java.util.Locale;
 public class AccountFrag extends Fragment {
 
 
-
     // editing users profile under account fragment
     TextView fName, birthday, gender, favFood;
-    ImageView userPhoto, coverPhoto;
-
-    Profile profile;
+    ImageView userPhoto, profileCover;
+    User user;
 
     FloatingActionButton fab;
 
     ProgressDialog pd;
 
-   private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-   private String ID = sharedPreferences.getString("id", "");
+  /* private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+     private String ID = sharedPreferences.getString("id", "");
     private final         String url = "https://chowmate.herokuapp.com/api/profile/" + ID;
     private JsonArrayRequest request;
-    private RequestQueue requestQ;
+    private RequestQueue requestQ; */
+
+
 
     @Nullable
     @Override
