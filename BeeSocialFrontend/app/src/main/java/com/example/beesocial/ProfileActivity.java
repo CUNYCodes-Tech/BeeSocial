@@ -38,8 +38,6 @@ public class ProfileActivity extends AppCompatActivity {
     EditText appFavoriteFoods;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
         appBirthDate = findViewById(R.id.birthDate);
         appGenderIdentity = findViewById(R.id.genderIdentity);
         appFavoriteFoods = findViewById(R.id.favoriteFoods);
-
 
 
         //Sets the behavior for when the button is clicked
@@ -127,8 +124,6 @@ public class ProfileActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-
-
 
 
 }

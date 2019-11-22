@@ -1,13 +1,17 @@
 package com.example.beesocial;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -20,6 +24,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -30,8 +35,10 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class EditEventFrag extends Fragment {
 
@@ -98,6 +105,7 @@ public class EditEventFrag extends Fragment {
                                 for (int j = 0; j < interestedUsers.length(); j++) {
                                     users.add(new User());
                                     users.get(j).setUserID(interestedUsers.getString(j));
+                                    getUserInfo(users.get(j), interestedUsers.getString(j));
                                     System.out.println(users.get(j).getUserID());
                                 }
                                 event.setUsers(users);
@@ -120,6 +128,46 @@ public class EditEventFrag extends Fragment {
         RequestQueue requestQ = Volley.newRequestQueue(getContext());
         requestQ.add(request);
 
+    }
+
+    private void getUserInfo(User user, String profileID) {
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext()); //Sets up the RequestQueue
+
+        String url = "https://chowmate.herokuapp.com/api/profile/" + profileID; //URL where the information will be sent
+
+        //Sets the behaviors for the GET request sending the user info
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject userInfo = new JSONObject(response);
+                            user.setFirstName(userInfo.getString("firstname"));
+                            user.setLastName(userInfo.getString("lastname"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }) {
+            //Creates a header with the authentication token
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(getContext());
+                String token = sharedPreferences.getString("token", "");
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+        //Fires off to the backend
+        requestQueue.add(stringRequest);
     }
 
     private void setUpRecycler(ArrayList<Event> events) {

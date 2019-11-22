@@ -40,7 +40,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
     private LocationRequest mLocationRequest;
-    private Location mLocation;
     Marker mCurrLocationMarker;
     private GoogleMap mMap;
 
@@ -114,7 +113,6 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnMyLoca
                 //The last location in the list is the newest
                 Location location = locationList.get(locationList.size() - 1);
                 Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
-                mLocation = location;
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker.remove();
                 }
