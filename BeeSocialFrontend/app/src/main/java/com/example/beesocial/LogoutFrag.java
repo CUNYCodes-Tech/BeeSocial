@@ -11,9 +11,9 @@ import androidx.fragment.app.Fragment;
 public class LogoutFrag extends Fragment {
 
     @Nullable
-  @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
-      return inflater.inflate(R.layout.logout_fragment, container, false);
-  }
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.logout_fragment, container, false);
+    }
 
 }

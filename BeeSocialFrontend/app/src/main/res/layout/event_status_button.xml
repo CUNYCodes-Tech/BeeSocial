@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    android:id="@+id/clicked_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/clicked_card"
+    android:layout_margin="15dp"
     android:background="@drawable/side_nav_bar"
-    android:layout_margin="15dp">
+    android:orientation="vertical">
 
 
     <RelativeLayout
@@ -30,9 +30,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/clicked_item_title"
+            android:drawableLeft="@drawable/location"
             android:gravity="center"
             android:padding="5sp"
-            android:drawableLeft="@drawable/location"
             android:text="Event Location"
             android:textSize="15sp" />
 
@@ -41,10 +41,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/clicked_item_location"
+            android:drawableLeft="@drawable/date"
             android:gravity="center"
             android:padding="5sp"
             android:text="Event Date"
-            android:drawableLeft="@drawable/date"
             android:textSize="15sp" />
 
         <TextView

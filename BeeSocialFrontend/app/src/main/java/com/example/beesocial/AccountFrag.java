@@ -41,7 +41,6 @@ import java.util.Locale;
 public class AccountFrag extends Fragment {
 
 
-
     // editing users profile under account fragment
     TextView fName, birthday, gender, favFood;
     ImageView userPhoto, coverPhoto;
@@ -52,67 +51,64 @@ public class AccountFrag extends Fragment {
 
     ProgressDialog pd;
 
-   private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-   private String ID = sharedPreferences.getString("id", "");
-    private final         String url = "https://chowmate.herokuapp.com/api/profile/" + ID;
-    private JsonArrayRequest request;
-    private RequestQueue requestQ;
+//    private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+//    private String ID = sharedPreferences.getString("id", "");
+//    private final String url = "https://chowmate.herokuapp.com/api/profile/" + ID;
+//    private JsonArrayRequest request;
+//    private RequestQueue requestQ;
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-      View view= inflater.inflate(R.layout.account_fragment, container, false);
+        View view = inflater.inflate(R.layout.account_fragment, container, false);
 
-      fName= view.findViewById(R.id.firstName);
-      birthday= view.findViewById(R.id.birthDate);
-      gender=view.findViewById(R.id.genderIdentity);
-      favFood=view.findViewById(R.id.favoriteFoods);
-      fab= view.findViewById(R.id.fab);
+        fName = view.findViewById(R.id.firstName);
+        birthday = view.findViewById(R.id.birthDate);
+        gender = view.findViewById(R.id.genderIdentity);
+        favFood = view.findViewById(R.id.favoriteFoods);
+        fab = view.findViewById(R.id.fab);
 
-      //init progress dialog
+        //init progress dialog
 
-        pd= new ProgressDialog(getActivity());
+        pd = new ProgressDialog(getActivity());
 
-      fab.setOnClickListener(new View.OnClickListener(){
+        fab.setOnClickListener(new View.OnClickListener() {
 
-          @Override
-          public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
 
-              showEditProfile();
-          }
-      });
+                showEditProfile();
+            }
+        });
 
-      return view;
+        return view;
 
     }
 
- private void showEditProfile(){
-        String options[]= {"Edit Name", "Edit Birthday", "Edit Gender", "Edit Favorite Foods"};
+    private void showEditProfile() {
+        String options[] = {"Edit Name", "Edit Birthday", "Edit Gender", "Edit Favorite Foods"};
 
-     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
-     builder.setTitle("Choose Action");
-     builder.setItems(options, new DialogInterface.OnClickListener() {
-         @Override
-         public void onClick(DialogInterface dialog, int which) {
-             if(which == 0){
-                 //edit name clicked
-             }
-             else if(which==1){
-                 //edit birthday clicked
-             }
-             else if (which==2){
-                 //edit gender clicked
-             }
-             else if(which==3){
-                 //edit fav foods clicked
-             }
-         }
-     });
-     builder.create().show();
+        builder.setTitle("Choose Action");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) {
+                    //edit name clicked
+                } else if (which == 1) {
+                    //edit birthday clicked
+                } else if (which == 2) {
+                    //edit gender clicked
+                } else if (which == 3) {
+                    //edit fav foods clicked
+                }
+            }
+        });
+        builder.create().show();
 
-        }
+    }
 
 
 }

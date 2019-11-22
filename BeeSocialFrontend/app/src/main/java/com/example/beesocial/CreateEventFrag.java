@@ -174,7 +174,7 @@ public class CreateEventFrag extends Fragment {
             locationBody.put("coordinates", coordinates);
             params.put("location", locationBody);
         } catch (JSONException e) {
-
+            e.printStackTrace();
         }
 
         String url = "https://chowmate.herokuapp.com/api/events"; //URL where the information will be sent
@@ -194,7 +194,7 @@ public class CreateEventFrag extends Fragment {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         // TODO: Handle error
-
+                        error.printStackTrace();
                     }
                 }) {
             //Creates a header with the authentication token
