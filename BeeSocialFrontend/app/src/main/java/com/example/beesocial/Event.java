@@ -7,7 +7,7 @@ public class Event {
 
     //this is to get the event objects loaded onto the cards on event status fragment
 
-
+    private String eventID;
     private String title;
     private String location;
     private String date;
@@ -63,5 +63,13 @@ public class Event {
 
     public void setUsers(ArrayList<User> users) {
         this.users = users;
+    }
+
+    public String getEventID() {
+        return eventID;
+    }
+
+    public void setEventID(String eventID) {
+        this.eventID = eventID;
     }
 }

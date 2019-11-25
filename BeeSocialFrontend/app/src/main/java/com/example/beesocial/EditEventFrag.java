@@ -1,7 +1,6 @@
 package com.example.beesocial;
 
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
@@ -11,7 +10,6 @@ import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -45,12 +43,11 @@ public class EditEventFrag extends Fragment {
     private RecyclerView mRecycler;
     private EventAdapter mEventAdapter;
     private ArrayList<Event> events;
-    View v;
+    private View v;
 
     public EditEventFrag() {
 
     }
-
 
     @Nullable
     @Override
@@ -77,40 +74,42 @@ public class EditEventFrag extends Fragment {
         String url = "https://chowmate.herokuapp.com/api/events";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
-
                     @RequiresApi(api = Build.VERSION_CODES.O)
                     @Override
                     public void onResponse(JSONArray response) {
-                        JSONObject jsonObject = null;
+                        JSONObject jsonObject;
                         Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
                         List<Address> address;
-
+                        SharedPreferences sharedPreferences =
+                                PreferenceManager.getDefaultSharedPreferences(getContext());
+                        String userID = sharedPreferences.getString("id", "");
                         for (int i = 0; i < response.length(); i++) {
                             try {
                                 jsonObject = response.getJSONObject(i);
-                                Event event = new Event();
-                                event.setTitle(jsonObject.getString("name"));
+                                if (jsonObject.getString("createdBy").equals(userID)) {
+                                    Event event = new Event();
+                                    event.setTitle(jsonObject.getString("name"));
+                                    event.setEventID(jsonObject.getString("_id"));
 
-                                JSONArray coordinates = jsonObject.getJSONObject("location")
-                                        .getJSONArray("coordinates");
-                                address = geocoder.getFromLocation(coordinates.getDouble(1),
-                                        coordinates.getDouble(0), 1);
-                                event.setLocation(address.get(0).getAddressLine(0));
+                                    JSONArray coordinates = jsonObject.getJSONObject("location")
+                                            .getJSONArray("coordinates");
+                                    address = geocoder.getFromLocation(coordinates.getDouble(1),
+                                            coordinates.getDouble(0), 1);
+                                    event.setLocation(address.get(0).getAddressLine(0));
 
-                                Date date = Date.from(Instant.parse(jsonObject.getString("time")));
-                                event.setDate(date.toString());
+                                    Date date = Date.from(Instant.parse(jsonObject.getString("time")));
+                                    event.setDate(date.toString());
 
-                                ArrayList<User> users = new ArrayList<>();
-                                JSONArray interestedUsers = jsonObject.getJSONArray("interested");
-                                for (int j = 0; j < interestedUsers.length(); j++) {
-                                    users.add(new User());
-                                    users.get(j).setUserID(interestedUsers.getString(j));
-                                    getUserInfo(users.get(j), interestedUsers.getString(j));
-                                    System.out.println(users.get(j).getUserID());
+                                    ArrayList<User> users = new ArrayList<>();
+                                    JSONArray interestedUsers = jsonObject.getJSONArray("interested");
+                                    for (int j = 0; j < interestedUsers.length(); j++) {
+                                        users.add(new User());
+                                        users.get(j).setUserID(interestedUsers.getString(j));
+                                        getUserInfo(users.get(j), interestedUsers.getString(j));
+                                    }
+                                    event.setUsers(users);
+                                    events.add(event);
                                 }
-                                event.setUsers(users);
-                                events.add(event);
-
                             } catch (JSONException | IOException e) {
                                 e.printStackTrace();
                             }

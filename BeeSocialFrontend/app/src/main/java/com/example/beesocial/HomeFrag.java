@@ -52,12 +52,9 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeFrag extends Fragment implements OnMapReadyCallback {
-    MapView mMapView;
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_LOCATION = 1;
     private FusedLocationProviderClient fusedLocationClient;
-    private LocationRequest mLocationRequest;
-    private Location mLocation;
-    Marker mCurrLocationMarker;
+    private Marker mCurrLocationMarker;
     private GoogleMap mMap;
 
     @Nullable
@@ -66,7 +63,7 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
         View v = inflater.inflate(R.layout.home_fragment, container, false);
 
         //Sets up everything needed for the map and its markers to display and function
-        mMapView = v.findViewById(R.id.mapView);
+        MapView mMapView = v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         mMapView.getMapAsync(this);
@@ -91,7 +88,7 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
         }
 
         //Creates a location request
-        mLocationRequest = new LocationRequest();
+        LocationRequest mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
 
         //Actually request a location update
@@ -217,7 +214,6 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
                 //The last location in the list is the newest
                 Location location = locationList.get(locationList.size() - 1);
                 Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
-                mLocation = location;
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker.remove();
                 }

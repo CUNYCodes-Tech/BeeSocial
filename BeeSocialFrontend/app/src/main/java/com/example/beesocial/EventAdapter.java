@@ -52,9 +52,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
                 dialog_loc.setText(event.getLocation());
                 dialog_date.setText(event.getDate());
                 dialog_time.setText(event.getTime());
-                setUpUserRecycler(mContext, event.getUsers());
+                setUpUserRecycler(mContext, event.getUsers(), event);
                 userView.setAdapter(userAdapter);
-                //event.getUsers();
 
                 mDialog.show();
             }
@@ -63,8 +62,8 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
         return myHolder;
     }
 
-    private void setUpUserRecycler(Context mContext, ArrayList<User> users) {
-        userAdapter = new UserAdapter(users, mContext);
+    private void setUpUserRecycler(Context mContext, ArrayList<User> users, Event event) {
+        userAdapter = new UserAdapter(users, mContext, event);
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false);
         userView.setLayoutManager(linearLayoutManager);
@@ -77,7 +76,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
         holder.event_loc.setText(events.get(position).getLocation());
         holder.event_date.setText(events.get(position).getDate());
         holder.event_time.setText(events.get(position).getTime());
-
     }
 
     @Override
@@ -89,7 +87,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.Holder> {
 
 
     public class Holder extends RecyclerView.ViewHolder {
-
         CardView card_list;
         TextView event_name;
         TextView event_loc;
