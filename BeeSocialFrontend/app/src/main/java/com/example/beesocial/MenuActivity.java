@@ -31,7 +31,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
 
-        //drawer menu settings
+        //Drawer menu settings
         drawerLayout = findViewById(R.id.drawer);
         drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open_drawer, R.string.close_drawer);
         drawerLayout.addDrawerListener(drawerToggle);
@@ -47,8 +47,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
-    //switches between the different pages on the map
-
+    //Switches between the different pages on the map
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch (menuItem.getItemId()) {

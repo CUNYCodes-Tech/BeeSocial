@@ -19,8 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -43,16 +41,16 @@ public class EditEventFrag extends Fragment {
     private RecyclerView mRecycler;
     private EventAdapter mEventAdapter;
     private ArrayList<Event> events;
-    private View v;
 
     public EditEventFrag() {
 
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.edit_fragment, container, false);
+        View v = inflater.inflate(R.layout.edit_fragment, container, false);
         events = new ArrayList<>();
         mRecycler = v.findViewById(R.id.recyclerView);
         mEventAdapter = new EventAdapter(getContext(), events);
@@ -70,59 +68,50 @@ public class EditEventFrag extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     private void getEvents() {
         String url = "https://chowmate.herokuapp.com/api/events";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
-                new Response.Listener<JSONArray>() {
-                    @RequiresApi(api = Build.VERSION_CODES.O)
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        JSONObject jsonObject;
-                        Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
-                        List<Address> address;
-                        SharedPreferences sharedPreferences =
-                                PreferenceManager.getDefaultSharedPreferences(getContext());
-                        String userID = sharedPreferences.getString("id", "");
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-                                jsonObject = response.getJSONObject(i);
-                                if (jsonObject.getString("createdBy").equals(userID)) {
-                                    Event event = new Event();
-                                    event.setTitle(jsonObject.getString("name"));
-                                    event.setEventID(jsonObject.getString("_id"));
+                response -> {
+                    JSONObject jsonObject;
+                    Geocoder geocoder = new Geocoder(getContext(), Locale.getDefault());
+                    List<Address> address;
+                    SharedPreferences sharedPreferences =
+                            PreferenceManager.getDefaultSharedPreferences(getContext());
+                    String userID = sharedPreferences.getString("id", "");
+                    for (int i = 0; i < response.length(); i++) {
+                        try {
+                            jsonObject = response.getJSONObject(i);
+                            if (jsonObject.getString("createdBy").equals(userID)) {
+                                Event event = new Event();
+                                event.setTitle(jsonObject.getString("name"));
+                                event.setEventID(jsonObject.getString("_id"));
 
-                                    JSONArray coordinates = jsonObject.getJSONObject("location")
-                                            .getJSONArray("coordinates");
-                                    address = geocoder.getFromLocation(coordinates.getDouble(1),
-                                            coordinates.getDouble(0), 1);
-                                    event.setLocation(address.get(0).getAddressLine(0));
+                                JSONArray coordinates = jsonObject.getJSONObject("location")
+                                        .getJSONArray("coordinates");
+                                address = geocoder.getFromLocation(coordinates.getDouble(1),
+                                        coordinates.getDouble(0), 1);
+                                event.setLocation(address.get(0).getAddressLine(0));
 
-                                    Date date = Date.from(Instant.parse(jsonObject.getString("time")));
-                                    event.setDate(date.toString());
+                                Date date = Date.from(Instant.parse(jsonObject.getString("time")));
+                                event.setDate(date.toString());
 
-                                    ArrayList<User> users = new ArrayList<>();
-                                    JSONArray interestedUsers = jsonObject.getJSONArray("interested");
-                                    for (int j = 0; j < interestedUsers.length(); j++) {
-                                        users.add(new User());
-                                        users.get(j).setUserID(interestedUsers.getString(j));
-                                        getUserInfo(users.get(j), interestedUsers.getString(j));
-                                    }
-                                    event.setUsers(users);
-                                    events.add(event);
+                                ArrayList<User> users = new ArrayList<>();
+                                JSONArray interestedUsers = jsonObject.getJSONArray("interested");
+                                for (int j = 0; j < interestedUsers.length(); j++) {
+                                    users.add(new User());
+                                    users.get(j).setUserID(interestedUsers.getString(j));
+                                    getUserInfo(users.get(j), interestedUsers.getString(j));
                                 }
-                            } catch (JSONException | IOException e) {
-                                e.printStackTrace();
+                                event.setUsers(users);
+                                events.add(event);
                             }
+                        } catch (JSONException | IOException e) {
+                            e.printStackTrace();
                         }
-                        setUpRecycler(events);
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-
-        });
+                    setUpRecycler(events);
+                }, Throwable::printStackTrace);
 
         RequestQueue requestQ = Volley.newRequestQueue(getContext());
         requestQ.add(request);
@@ -136,24 +125,16 @@ public class EditEventFrag extends Fragment {
 
         //Sets the behaviors for the GET request sending the user info
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject userInfo = new JSONObject(response);
-                            user.setFirstName(userInfo.getString("firstname"));
-                            user.setLastName(userInfo.getString("lastname"));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                response -> {
+                    try {
+                        JSONObject userInfo = new JSONObject(response);
+                        user.setFirstName(userInfo.getString("firstname"));
+                        user.setLastName(userInfo.getString("lastname"));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                    }
-                }) {
+                Throwable::printStackTrace) {
             //Creates a header with the authentication token
             @Override
             public Map<String, String> getHeaders() {
