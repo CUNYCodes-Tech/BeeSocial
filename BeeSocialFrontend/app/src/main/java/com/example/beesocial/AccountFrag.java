@@ -9,11 +9,15 @@ import android.location.Geocoder;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -24,6 +28,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -32,11 +37,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public class AccountFrag extends Fragment {
 
@@ -71,15 +82,18 @@ public class AccountFrag extends Fragment {
         fab = view.findViewById(R.id.fab);
 
         //init progress dialog
-
         pd = new ProgressDialog(getActivity());
 
+
         fab.setOnClickListener(new View.OnClickListener() {
+
 
             @Override
             public void onClick(View v) {
 
                 showEditProfile();
+
+
             }
         });
 
@@ -97,13 +111,17 @@ public class AccountFrag extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
-                    //edit name clicked
+                   pd.setMessage("updating name");
+               //     update("name");
                 } else if (which == 1) {
-                    //edit birthday clicked
+                    pd.setMessage("Updating Birthday");
+                 //   update("birthday");
                 } else if (which == 2) {
-                    //edit gender clicked
+                    pd.setMessage("Updating Gender");
+                   // update("gender");
                 } else if (which == 3) {
-                    //edit fav foods clicked
+                    pd.setMessage("Updating Fav Foods");
+                   // update("food");
                 }
             }
         });
@@ -111,5 +129,44 @@ public class AccountFrag extends Fragment {
 
     }
 
+/*    private void update(String key){
+        AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
+        builder.setTitle("Update" + key);
+        LinearLayout linearLayout = new LinearLayout(getActivity());
+        linearLayout.setOrientation(LinearLayout.VERTICAL);
+        linearLayout.setPadding(10,10,10,10);
+        EditText editText= new EditText(getActivity());
+        editText.setHint("enter "+ key);
+        linearLayout.addView(editText);
+
+        builder.setView(linearLayout);
+
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String value= editText.getText().toString().trim();
+                if(!TextUtils.isEmpty(value)) {
+                    pd.show();
+                    HashMap<String, Object> result= new HashMap<>();
+                    result.put(key,value);
+                }else{
+                    Toast.makeText(getActivity(), "Enter" +key, Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        });
+        builder.setNegativeButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.create();
+    }
+
+*/
+
 
 }
+
+
