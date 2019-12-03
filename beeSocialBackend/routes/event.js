@@ -282,7 +282,7 @@ eventRouter.put('/events/invite/:eventId', authenticate.verifyUser, (req, res, n
             let newInterested = [];
             let removed = false;
             for (let i = 0; i < interested.length; i++) {
-                if (interested[i] == userId) {
+                if (interested[i] == person) {
                     removed = true;
                 }else {
                     newInterested.push(interested[i]);
