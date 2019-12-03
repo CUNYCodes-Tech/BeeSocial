@@ -178,13 +178,17 @@ public class CreateEventFrag extends Fragment {
         }
 
         String url = "https://chowmate.herokuapp.com/api/events"; //URL where the information will be sent
+//        String url = "http://10.0.2.2:8888/api/events";
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
                 (Request.Method.POST, url, params,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
-
+                                Toast toast = Toast.makeText(getContext(),
+                                        "Event created!",
+                                        Toast.LENGTH_SHORT);
+                                toast.show();
                             }
                         }, new Response.ErrorListener() {
                     @Override

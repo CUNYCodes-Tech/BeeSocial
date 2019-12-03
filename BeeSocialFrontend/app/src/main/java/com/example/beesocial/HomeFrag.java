@@ -15,6 +15,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -28,6 +34,10 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -44,7 +54,7 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.home_fragment, container, false);
-        mMapView = (MapView) v.findViewById(R.id.mapView);
+        mMapView = v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
         mMapView.getMapAsync(this); //this is important
@@ -68,7 +78,6 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
             e.printStackTrace();
         }
 
-
         //Creates a location request
         mLocationRequest = new LocationRequest();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
@@ -76,10 +85,49 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
         //Actually request a location update
         fusedLocationClient.requestLocationUpdates(mLocationRequest, mLocationCallback, Looper.myLooper());
 
+        //Sets up the myLocation layer
         mMap.setMyLocationEnabled(true);
         mMap.getUiSettings().setMyLocationButtonEnabled(true);
-//        mMap.setOnMyLocationButtonClickListener(this);
-//        mMap.setOnMyLocationClickListener(this);
+
+        //Gets all open events and sets markers
+        getOpenEvents();
+    }
+
+    private void getOpenEvents() {
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+
+        String url = "https://chowmate.herokuapp.com/api/events"; //URL where the information will be sent
+//        String url = "http://10.0.2.2:8888/api/events";
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                if (!response.getJSONObject(i).getBoolean("closed")) {
+                                    JSONArray coordinates = response.getJSONObject(i)
+                                            .getJSONObject("location")
+                                            .getJSONArray("coordinates");
+                                    mMap.addMarker(new MarkerOptions()
+                                            .position(new LatLng(coordinates.getDouble(1), coordinates.getDouble(0)))
+                                            .title(response.getJSONObject(i).getString("name")));
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+
+        requestQueue.add(jsonArrayRequest);
     }
 
     LocationCallback mLocationCallback = new LocationCallback() {
