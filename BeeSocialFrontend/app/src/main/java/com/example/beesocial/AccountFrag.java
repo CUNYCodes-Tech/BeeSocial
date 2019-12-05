@@ -28,6 +28,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -54,19 +55,18 @@ public class AccountFrag extends Fragment {
 
     // editing users profile under account fragment
     TextView fName, birthday, gender, favFood;
-    ImageView userPhoto, profileCover;
+    String usersName, usersBirth, genderId, ff;
+    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+   String ID = sharedPreferences.getString("id", "");
+    String url = "https://chowmate.herokuapp.com/api/profile/" + ID ;
+
     User user;
 
     FloatingActionButton fab;
 
     ProgressDialog pd;
 
-
-//    private SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-//    private String ID = sharedPreferences.getString("id", "");
-//    private final String url = "https://chowmate.herokuapp.com/api/profile/" + ID;
-//    private JsonArrayRequest request;
-//    private RequestQueue requestQ;
+    RequestQueue rq;
 
 
     @Nullable
@@ -85,7 +85,13 @@ public class AccountFrag extends Fragment {
         pd = new ProgressDialog(getActivity());
 
 
-        fab.setOnClickListener(new View.OnClickListener() {
+        rq = Volley.newRequestQueue(getContext());
+        fName = view.findViewById(R.id.firstName);
+
+        sendJsonRequest();
+
+
+     /*   fab.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
@@ -96,9 +102,35 @@ public class AccountFrag extends Fragment {
 
             }
         });
-
+*/
         return view;
 
+    }
+
+    public void sendJsonRequest() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    usersName = response.getString("Users Name");
+
+
+                    fName.setText(usersName);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        rq.add(jsonObjectRequest);
     }
 
     private void showEditProfile() {
@@ -111,17 +143,17 @@ public class AccountFrag extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
-                   pd.setMessage("updating name");
-               //     update("name");
+                    pd.setMessage("updating name");
+                    //     update("name");
                 } else if (which == 1) {
                     pd.setMessage("Updating Birthday");
-                 //   update("birthday");
+                    //   update("birthday");
                 } else if (which == 2) {
                     pd.setMessage("Updating Gender");
-                   // update("gender");
+                    // update("gender");
                 } else if (which == 3) {
                     pd.setMessage("Updating Fav Foods");
-                   // update("food");
+                    // update("food");
                 }
             }
         });

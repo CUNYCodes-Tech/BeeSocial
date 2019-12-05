@@ -48,7 +48,7 @@
 
                 <TextView
                     android:id="@+id/firstName"
-                    android:text="User's Name"
+                    android:text="Users Name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -59,7 +59,7 @@
 
                 <TextView
                     android:id="@+id/birthDate"
-                    android:text="User's Birthday"
+                    android:text="Users Birthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
