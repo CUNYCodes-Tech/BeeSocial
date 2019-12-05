@@ -48,6 +48,7 @@
 
                 <TextView
                     android:id="@+id/firstName"
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -58,6 +59,7 @@
 
                 <TextView
                     android:id="@+id/birthDate"
+                    android:text="Users Birthday"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -67,6 +69,7 @@
 
                     <TextView
                         android:id="@+id/genderIdentity"
+                        android:text="Gender Identiy"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -76,6 +79,7 @@
 
                     <TextView
                         android:id="@+id/favoriteFoods"
+                        android:text="Favorite Foods"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
