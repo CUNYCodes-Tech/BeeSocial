@@ -2,6 +2,7 @@ package com.example.beesocial;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.location.Address;
@@ -56,9 +57,9 @@ public class AccountFrag extends Fragment {
     // editing users profile under account fragment
     TextView fName, birthday, gender, favFood;
     String usersName, usersBirth, genderId, ff;
-    SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-   String ID = sharedPreferences.getString("id", "");
-    String url = "https://chowmate.herokuapp.com/api/profile/" + ID ;
+    /*   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+       String ID = sharedPreferences.getString("id", "");*/
+    String url = "https://chowmate.herokuapp.com/api/profile/";
 
     User user;
 
@@ -84,14 +85,13 @@ public class AccountFrag extends Fragment {
         //init progress dialog
         pd = new ProgressDialog(getActivity());
 
-
         rq = Volley.newRequestQueue(getContext());
         fName = view.findViewById(R.id.firstName);
 
         sendJsonRequest();
 
 
-     /*   fab.setOnClickListener(new View.OnClickListener() {
+        fab.setOnClickListener(new View.OnClickListener() {
 
 
             @Override
@@ -102,7 +102,7 @@ public class AccountFrag extends Fragment {
 
             }
         });
-*/
+
         return view;
 
     }
@@ -114,7 +114,6 @@ public class AccountFrag extends Fragment {
 
                 try {
                     usersName = response.getString("Users Name");
-
 
                     fName.setText(usersName);
 
@@ -143,16 +142,16 @@ public class AccountFrag extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == 0) {
-                    pd.setMessage("updating name");
-                    //     update("name");
+                    showAddItemDialog("Name");
+
                 } else if (which == 1) {
-                    pd.setMessage("Updating Birthday");
+                    showAddItemDialog("Birthday");
                     //   update("birthday");
                 } else if (which == 2) {
-                    pd.setMessage("Updating Gender");
+                    showAddItemDialog("Gender");
                     // update("gender");
                 } else if (which == 3) {
-                    pd.setMessage("Updating Fav Foods");
+                    showAddItemDialog("Favorite foods");
                     // update("food");
                 }
             }
@@ -161,44 +160,33 @@ public class AccountFrag extends Fragment {
 
     }
 
-/*    private void update(String key){
-        AlertDialog.Builder builder= new AlertDialog.Builder(getActivity());
-        builder.setTitle("Update" + key);
-        LinearLayout linearLayout = new LinearLayout(getActivity());
-        linearLayout.setOrientation(LinearLayout.VERTICAL);
-        linearLayout.setPadding(10,10,10,10);
-        EditText editText= new EditText(getActivity());
-        editText.setHint("enter "+ key);
-        linearLayout.addView(editText);
-
-        builder.setView(linearLayout);
-
-        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String value= editText.getText().toString().trim();
-                if(!TextUtils.isEmpty(value)) {
-                    pd.show();
-                    HashMap<String, Object> result= new HashMap<>();
-                    result.put(key,value);
-                }else{
-                    Toast.makeText(getActivity(), "Enter" +key, Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-        builder.setNegativeButton("Update", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-            }
-        });
-        builder.create();
+    private void showAddItemDialog(String key) {
+        EditText taskEditText = new EditText(getActivity());
+        AlertDialog dialog = new AlertDialog.Builder(getActivity())
+                .setTitle("Update " + key)
+                .setMessage("Edit " + key)
+                .setView(taskEditText)
+                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String value = taskEditText.getText().toString().trim();
+                        if (!TextUtils.isEmpty(value)) {
+                            pd.show();
+                            HashMap<String, Object> result = new HashMap<>();
+                            result.put(key, value);
+                        } else {
+                            Toast.makeText(getActivity(), "Enter" + "", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .create();
+        dialog.show();
     }
-
-*/
-
-
 }
+
+
+
+
 
 
