@@ -17,7 +17,8 @@ var User = new Schema({
       default: 'Please add your favorite food'
     },
     age: {
-      type: Number
+      type: Number,
+      default: 'Please add your age'
     },
     sex: {
       type: String,
