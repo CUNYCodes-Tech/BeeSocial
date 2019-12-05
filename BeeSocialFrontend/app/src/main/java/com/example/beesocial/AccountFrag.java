@@ -2,12 +2,8 @@ package com.example.beesocial;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.location.Address;
-import android.location.Geocoder;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -15,53 +11,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class AccountFrag extends Fragment {
 
 
     // editing users profile under account fragment
+
     TextView fName, birthday, gender, favFood;
     String usersName, usersBirth, genderId, ff;
-    /*   SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-       String ID = sharedPreferences.getString("id", "");*/
-    String url = "https://chowmate.herokuapp.com/api/profile/";
 
-    User user;
 
     FloatingActionButton fab;
 
@@ -88,8 +65,7 @@ public class AccountFrag extends Fragment {
         rq = Volley.newRequestQueue(getContext());
         fName = view.findViewById(R.id.firstName);
 
-        sendJsonRequest();
-
+        getUserInfo();
 
         fab.setOnClickListener(new View.OnClickListener() {
 
@@ -107,15 +83,19 @@ public class AccountFrag extends Fragment {
 
     }
 
-    public void sendJsonRequest() {
+    public void getUserInfo() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String ID = sharedPreferences.getString("id", "");
+        String url = "https://chowmate.herokuapp.com/api/profile/" + ID;
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
 
                 try {
-                    usersName = response.getString("Users Name");
-
-                    fName.setText(usersName);
+                    fName.setText(response.getString("firstname"));
+                    birthday.setText(response.getString("birthdate"));
+                    gender.setText(response.getString("sex"));
+                    favFood.setText(response.getString("favoriteFood"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -127,7 +107,59 @@ public class AccountFrag extends Fragment {
             public void onErrorResponse(VolleyError error) {
 
             }
-        });
+        }) {
+            //Creates a header with the authentication token
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(getContext());
+                String token = sharedPreferences.getString("token", "");
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        rq.add(jsonObjectRequest);
+    }
+
+    public void sendJsonRequest() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        String ID = sharedPreferences.getString("id", "");
+        String url = "https://chowmate.herokuapp.com/api/profile/" + ID;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("firstname", fName.getText().toString());
+            jsonObject.put("birthdate", birthday.getText().toString());
+            jsonObject.put("sex",  gender.getText().toString());
+            jsonObject.put("favoriteFood", favFood.getText().toString());
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Toast.makeText(getContext(), "Profile updated!", Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        }){
+            //Creates a header with the authentication token
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(getContext());
+                String token = sharedPreferences.getString("token", "");
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
 
         rq.add(jsonObjectRequest);
     }
@@ -146,13 +178,13 @@ public class AccountFrag extends Fragment {
 
                 } else if (which == 1) {
                     showAddItemDialog("Birthday");
-                    //   update("birthday");
+
                 } else if (which == 2) {
                     showAddItemDialog("Gender");
-                    // update("gender");
+
                 } else if (which == 3) {
                     showAddItemDialog("Favorite foods");
-                    // update("food");
+
                 }
             }
         });
@@ -170,8 +202,20 @@ public class AccountFrag extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String value = taskEditText.getText().toString().trim();
+                        if (key.equals("Name")) {
+                            fName.setText(value);
+
+                        } else if (key.equals("Birthday")) {
+                            birthday.setText(value);
+
+                        } else if (key.equals("Gender")) {
+                            gender.setText(value);
+
+                        } else if (key.equals("Favorite foods")) {
+                            favFood.setText(value);
+                        }
+
                         if (!TextUtils.isEmpty(value)) {
-                            pd.show();
                             HashMap<String, Object> result = new HashMap<>();
                             result.put(key, value);
                         } else {
@@ -182,6 +226,7 @@ public class AccountFrag extends Fragment {
                 .setNegativeButton("Cancel", null)
                 .create();
         dialog.show();
+        sendJsonRequest();
     }
 }
 
