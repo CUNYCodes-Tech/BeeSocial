@@ -14,7 +14,6 @@ var User = new Schema({
     },
     birthdate: {
       type: Date,
-      default: 'Please add your birthdate'
     },
     favoriteFood: {
       type: String,
