@@ -44,7 +44,7 @@ const eventSchema = new schema({
     },
     time: {
         type: Date,
-        default: ""
+        default: "Time is not specified"
     },
     description: {
         type: String,

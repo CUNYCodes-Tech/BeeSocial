@@ -12,6 +12,10 @@ var User = new Schema({
         type: String,
         default: 'Please add your last name'
     },
+    birthdate: {
+      type: Date,
+      default: 'Please add your birthdate'
+    },
     favoriteFood: {
       type: String,
       default: 'Please add your favorite food'
