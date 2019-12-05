@@ -2,6 +2,8 @@ package com.example.beesocial;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.Holder> {
     private Event event;
@@ -59,7 +63,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.Holder> {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, null,
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, url, jsonObject,
                         new Response.Listener<JSONObject>() {
                             @Override
                             public void onResponse(JSONObject response) {
@@ -71,7 +75,18 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.Holder> {
                             public void onErrorResponse(VolleyError error) {
                                 error.printStackTrace();
                             }
-                        });
+                        }) {
+                    //Creates a header with the authentication token
+                    @Override
+                    public Map<String, String> getHeaders() {
+                        Map<String, String> headers = new HashMap<>();
+                        SharedPreferences sharedPreferences =
+                                PreferenceManager.getDefaultSharedPreferences(context);
+                        String token = sharedPreferences.getString("token", "");
+                        headers.put("Authorization", "Bearer " + token);
+                        return headers;
+                    }
+                };
                 requestQueue.add(jsonObjectRequest);
             }
         });

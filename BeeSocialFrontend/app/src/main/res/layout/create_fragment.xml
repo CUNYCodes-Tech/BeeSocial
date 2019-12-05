@@ -115,6 +115,12 @@
                         android:background="@drawable/date_selector"
                       />
 
+                    <Button
+                        android:id="@+id/TimePicker"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="pick_time" />
+
                     <TextView
                         android:id="@+id/timeText"
                         android:layout_width="wrap_content"
