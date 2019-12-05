@@ -21,7 +21,6 @@ var User = new Schema({
     },
     age: {
       type: Number,
-      default: 'Please add your age'
     },
     sex: {
       type: String,
