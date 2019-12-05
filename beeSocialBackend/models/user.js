@@ -6,22 +6,26 @@ var passportLocalMongoose = require('passport-local-mongoose');
 var User = new Schema({
     firstname: {
         type: String,
-        default: ''
+        default: 'Please add your first name'
     },
     lastname: {
         type: String,
-        default: ''
+        default: 'Please add your last name'
+    },
+    favoriteFood: {
+      type: String,
+      default: 'Please add your favorite food'
     },
     age: {
       type: Number
     },
     sex: {
       type: String,
-      default: ""
+      default: "Please add your sex"
     },
     description: {
       type: String,
-      default: ""
+      default: "Please give a short description about yourself"
     },
     postedEvent: [{
       type: mongoose.Schema.Types.ObjectId,
