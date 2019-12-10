@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:layout_marginTop="40dp"
         android:textSize="30sp"
-        android:textColor="#0E0D0D"/>
+        android:textColor="@color/bluecolor"/>
     <TextView
         android:id="@+id/createProfile"
         android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:textSize="17sp"
-        android:textColor="#0E0D0D" />
+        android:textColor="@color/bluecolor" />
 
 
 
@@ -46,10 +46,11 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/card"
                 android:layout_width="match_parent"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="150dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="15dp"
                 android:layout_height="match_parent"
+
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp">
 
@@ -66,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Name of Event (Dinner, Happy Hour, Brunch)"
-                        android:textColor="#0E0D0D"
+                        android:textColor="@color/bluecolor"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -83,7 +84,7 @@
                         android:layout_margin="10dp"
                         android:inputType="textMultiLine"
                         android:text="Event Location"
-                        android:textColor="#0E0D0D"
+                        android:textColor="@color/bluecolor"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -100,7 +101,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Date"
-                        android:textColor="#0E0D0D"
+                        android:textColor="@color/bluecolor"
                         android:textSize="14sp"
                         android:textStyle="bold" />
                     />
@@ -120,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Time"
-                        android:textColor="#0E0D0D"
+                        android:textColor="@color/bluecolor"
                         android:textSize="14sp"
                         android:textStyle="bold" />
                     />
@@ -155,9 +156,10 @@
                     android:id="@+id/createEventSubmit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/side_nav_bar"
+                    android:layout_centerHorizontal="true"
                     android:text="Create"
-                    android:textColor="#0E0D0D"
+                    android:background="@drawable/button"
+                    android:textColor="@color/purpColor"
                     android:textSize="20dp"
                     android:textStyle="bold"/>
             </RelativeLayout>

@@ -3,7 +3,7 @@
     android:id="@+id/clicked_card"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp"
+    android:layout_margin="5dp"
     android:background="@drawable/side_nav_bar"
     android:orientation="vertical">
 
@@ -11,7 +11,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="20dp">
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/clicked_item_title"
@@ -20,7 +20,7 @@
             android:layout_alignParentTop="true"
             android:gravity="center"
             android:text="Event Title"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/bluecolor"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/clicked_item_title"
             android:drawableLeft="@drawable/location"
+            android:textColor="@color/bluecolor"
             android:gravity="center"
             android:padding="5sp"
             android:text="Event Location"
@@ -42,6 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/clicked_item_location"
             android:drawableLeft="@drawable/date"
+            android:textColor="@color/bluecolor"
             android:gravity="center"
             android:padding="5sp"
             android:text="Event Date"
@@ -52,6 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/clicked_item_date"
+            android:textColor="@color/bluecolor"
             android:gravity="center"
             android:padding="5sp"
             android:text="Event Time"

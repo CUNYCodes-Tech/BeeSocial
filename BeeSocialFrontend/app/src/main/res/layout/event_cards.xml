@@ -17,22 +17,25 @@
         android:padding="16dp" >
 
         <TextView
-            android:layout_width="130dp"
-            android:layout_height="120dp"
             android:id="@+id/item_image"
-            android:background="@drawable/chowmate"
+            android:layout_width="96dp"
+            android:layout_height="77dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp" />
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/chow3logo" />
 
         <TextView
             android:id="@+id/item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Event Title"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/bluecolor"
             android:textStyle="bold"
             android:layout_toEndOf="@+id/item_image"
             android:layout_toRightOf="@+id/item_image"
@@ -44,6 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Event Location"
+            android:textColor="@color/bluecolor"
             android:layout_toEndOf="@+id/item_image"
             android:layout_toRightOf="@+id/item_image"
             android:layout_below="@+id/item_title" />
@@ -51,6 +55,7 @@
             android:id="@+id/item_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/bluecolor"
             android:text="Event Date"
             android:layout_toEndOf="@+id/item_image"
             android:layout_toRightOf="@+id/item_image"
@@ -59,6 +64,7 @@
             android:id="@+id/item_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="@color/bluecolor"
             android:text="Event Time"
             android:layout_toEndOf="@+id/item_image"
             android:layout_toRightOf="@+id/item_image"
@@ -72,12 +78,12 @@
             android:layout_below="@+id/item_time"
             android:layout_alignParentRight="true"
             android:layout_marginTop="4dp"
-
             android:layout_marginRight="5dp"
-            android:background="@color/colorPrimaryDark"
+            android:background="@drawable/button"
             android:text="Delete Event"
-            android:textAllCaps="false"
-            android:textColor="@color/colorPrimary" />
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textColor="@color/bluecolor" />
 
 
     </RelativeLayout>
