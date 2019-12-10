@@ -341,8 +341,8 @@ eventRouter.get('/events/mine', authenticate.verifyUser, (req, res, next) => {
 
 
 // delete event
-eventRouter.delete('/events', authenticate.verifyUser, (req, res, next) => {
-    Event.findByIdAndRemove(req.body.eventId)
+eventRouter.delete('/events/:eventId', authenticate.verifyUser, (req, res, next) => {
+    Event.findByIdAndRemove(req.params.eventId)
         .then((event) => {
             res.statusCode = 200;
             res.setHeader('Content-Type', 'application/json');
