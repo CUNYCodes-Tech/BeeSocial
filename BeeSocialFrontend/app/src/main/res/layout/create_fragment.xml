@@ -12,24 +12,24 @@
         android:id="@+id/welcomeUser"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome ChowMate."
         android:layout_centerHorizontal="true"
-        android:textStyle="bold"
         android:layout_marginTop="40dp"
+        android:text="Welcome ChowMate."
+        android:textColor="#0E0D0D"
         android:textSize="30sp"
-        android:textColor="#0E0D0D"/>
+        android:textStyle="bold" />
+
     <TextView
         android:id="@+id/createProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/welcomeUser"
+        android:layout_centerHorizontal="true"
         android:paddingTop="10dp"
         android:text="Lets get chowing!"
-        android:layout_below="@+id/welcomeUser"
-        android:textStyle="bold"
-        android:layout_centerHorizontal="true"
+        android:textColor="#0E0D0D"
         android:textSize="17sp"
-        android:textColor="#0E0D0D" />
-
+        android:textStyle="bold" />
 
 
     <ScrollView
@@ -46,14 +46,13 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/card"
                 android:layout_width="match_parent"
-                android:layout_marginTop="140dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="15dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="40dp"
-                android:layout_marginRight="40dp">
+                android:layout_marginTop="140dp"
+                android:layout_marginRight="40dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="15dp">
 
-\
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -92,7 +91,7 @@
                         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"/>
+                        android:layout_margin="10dp" />
 
                     <TextView
                         android:id="@+id/dateText"
@@ -103,7 +102,7 @@
                         android:textColor="#0E0D0D"
                         android:textSize="14sp"
                         android:textStyle="bold" />
-                    />
+
 
                     <EditText
                         android:id="@+id/pickDate"
@@ -111,14 +110,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/dateText"
                         android:layout_margin="10dp"
-                        android:background="@drawable/date_selector"
-                      />
-
-                    <Button
-                        android:id="@+id/TimePicker"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="pick_time" />
+                        android:background="@drawable/date_selector" />
 
                     <TextView
                         android:id="@+id/timeText"
@@ -129,18 +121,18 @@
                         android:textColor="#0E0D0D"
                         android:textSize="14sp"
                         android:textStyle="bold" />
-                    />
+
 
                     <EditText
                         android:id="@+id/pickTime"
-                        android:layout_width="match_parent"
+                        android:layout_width="314dp"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/timeText"
                         android:layout_margin="10dp"
 
                         android:background="@drawable/date_selector"
 
-                        android:textColor="@color/colorPrimaryDark"/>
+                        android:textColor="@color/colorPrimaryDark" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -165,9 +157,8 @@
                     android:text="Create"
                     android:textColor="#0E0D0D"
                     android:textSize="20dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </RelativeLayout>
-
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

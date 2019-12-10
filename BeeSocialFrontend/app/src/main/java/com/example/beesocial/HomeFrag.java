@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,9 +53,8 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.home_fragment, container, false);
-
         //Sets up everything needed for the map and its markers to display and function
+        View v = inflater.inflate(R.layout.home_fragment, container, false);
         MapView mMapView = v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();
@@ -83,6 +81,7 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
         //Gets all open events and sets markers
         getOpenEvents();
 
+        //If the user clicks on the info window, this is how they register interest
         mMap.setOnInfoWindowClickListener(
                 marker -> {
                     //Grabs the user's ID from the shared preferences
@@ -125,9 +124,7 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void getOpenEvents() {
         RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
-
         String url = "https://chowmate.herokuapp.com/api/events"; //URL where the information will be sent
-//        String url = "http://10.0.2.2:8888/api/events";
 
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, url, null,
                 response -> {
@@ -154,15 +151,16 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
                                         .title(response.getJSONObject(i).getString("name")));
                                 marker.setSnippet(date.toString());
                                 marker.setTag(response.getJSONObject(i).getString("_id"));
+                                if (response.getJSONObject(i).getJSONArray("participant").getString(0).equals(userID)) {
+                                    marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                                }
                             }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 },
-                error -> {
-
-                }
+                Throwable::printStackTrace
         );
 
         requestQueue.add(jsonArrayRequest);
@@ -175,7 +173,6 @@ public class HomeFrag extends Fragment implements OnMapReadyCallback {
             if (locationList.size() > 0) {
                 //The last location in the list is the newest
                 Location location = locationList.get(locationList.size() - 1);
-                Log.i("MapsActivity", "Location: " + location.getLatitude() + " " + location.getLongitude());
                 if (mCurrLocationMarker != null) {
                     mCurrLocationMarker.remove();
                 }

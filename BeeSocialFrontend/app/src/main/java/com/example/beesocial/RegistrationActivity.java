@@ -1,33 +1,32 @@
-/**
- * Sources used:
- * https://www.tutlane.com/tutorial/android/android-login-and-registration-screen-design
- * https://stackoverflow.com/questions/35390928/how-to-send-json-object-to-the-server-from-my-android-app
- * https://www.simplifiedcoding.net/android-volley-tutorial/
- * https://www.kompulsa.com/how-to-send-a-post-request-in-android/
- * https://stackoverflow.com/questions/26167631/how-to-access-the-contents-of-an-error-response-in-volley
+/*
+  Sources used:
+  https://www.tutlane.com/tutorial/android/android-login-and-registration-screen-design
+  https://stackoverflow.com/questions/35390928/how-to-send-json-object-to-the-server-from-my-android-app
+  https://www.simplifiedcoding.net/android-volley-tutorial/
+  https://www.kompulsa.com/how-to-send-a-post-request-in-android/
+  https://stackoverflow.com/questions/26167631/how-to-access-the-contents-of-an-error-response-in-volley
  */
 
 package com.example.beesocial;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,6 +39,7 @@ public class RegistrationActivity extends AppCompatActivity {
     EditText appConfirmPassword;
 
     //Allows the XML page to be rendered
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Override
     protected void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
@@ -55,16 +55,12 @@ public class RegistrationActivity extends AppCompatActivity {
 
         //Sets behavior and action to take once the register button has been clicked
         registerButton.setOnClickListener(
-                new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        registerUser();
-                    }
-                }
+                v -> registerUser()
         );
     }
 
     //Method to register a new user
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     private void registerUser() {
         //Creates a request queue and takes the global variables' values
         // and saves them to local ones
@@ -104,44 +100,38 @@ public class RegistrationActivity extends AppCompatActivity {
         String url = "https://chowmate.herokuapp.com/api/users/signup"; //URL where the information will be sent
 
         //Sends the saved information if passwords match to the server
+        //If successful, display a Toast confirming registration went through
+        //If it failed, display a Toast explaining why
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                new Response.Listener<String>() {
-                    //If successful, display a Toast confirming registration went through
-                    @Override
-                    public void onResponse(String response) {
-                        String reply = null;
-                        try {
-                            JSONObject data = new JSONObject(response);
-                            reply = data.getString("status");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                reply,
-                                Toast.LENGTH_LONG);
-                        toast.show();
-                        finish();
+                response -> {
+                    String reply = null;
+                    try {
+                        JSONObject data = new JSONObject(response);
+                        reply = data.getString("status");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            reply,
+                            Toast.LENGTH_LONG);
+                    toast.show();
+                    finish();
 
-                    }
                 },
-                new Response.ErrorListener() {
-                    //If it failed, display a Toast explaining why
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        String message = null;
-                        try {
-                            String responseBody = new String(error.networkResponse.data, "utf-8");
-                            JSONObject data = new JSONObject(responseBody);
-                            JSONObject data2 = new JSONObject(data.optString("err"));
-                            message = data2.optString("message");
-                        } catch (UnsupportedEncodingException e) {
-                        } catch (JSONException e) {
-                        }
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                message,
-                                Toast.LENGTH_LONG);
-                        toast.show();
+                error -> {
+                    String message = null;
+                    try {
+                        String responseBody = new String(error.networkResponse.data, StandardCharsets.UTF_8);
+                        JSONObject data = new JSONObject(responseBody);
+                        JSONObject data2 = new JSONObject(data.optString("err"));
+                        message = data2.optString("message");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            message,
+                            Toast.LENGTH_LONG);
+                    toast.show();
                 }) {
             //Load the parameters into the request body of the JSON object
             @Override

@@ -14,18 +14,18 @@ public class Event {
     private String time;
     private ArrayList<User> users;
 
-    public Event() {
+    Event() {
 
     }
 
-    public Event(String title, String location, String date, String time) {
-        this.title = title;
-        this.location = location;
-        this.date = date;
-        this.time = time;
-    }
+//    public Event(String title, String location, String date, String time) {
+//        this.title = title;
+//        this.location = location;
+//        this.date = date;
+//        this.time = time;
+//    }
 
-    public String getTitle() {
+    String getTitle() {
         return title;
     }
 
@@ -33,15 +33,15 @@ public class Event {
         return location;
     }
 
-    public String getDate() {
+    String getDate() {
         return date;
     }
 
-    public String getTime() {
+    String getTime() {
         return time;
     }
 
-    public void setTitle(String title) {
+    void setTitle(String title) {
         this.title = title;
     }
 
@@ -49,13 +49,13 @@ public class Event {
         this.location = location;
     }
 
-    public void setDate(String date) {
+    void setDate(String date) {
         this.date = date;
     }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
+//    public void setTime(String time) {
+//        this.time = time;
+//    }
 
     public ArrayList<User> getUsers() {
         return users;
@@ -65,11 +65,11 @@ public class Event {
         this.users = users;
     }
 
-    public String getEventID() {
+    String getEventID() {
         return eventID;
     }
 
-    public void setEventID(String eventID) {
+    void setEventID(String eventID) {
         this.eventID = eventID;
     }
 }

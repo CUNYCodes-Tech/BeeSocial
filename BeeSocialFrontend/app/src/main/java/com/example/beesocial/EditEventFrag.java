@@ -1,6 +1,8 @@
 package com.example.beesocial;
 
 
+import android.app.Activity;
+import androidx.fragment.app.FragmentManager;
 import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
@@ -35,6 +37,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class EditEventFrag extends Fragment {
 
@@ -51,9 +54,10 @@ public class EditEventFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.edit_fragment, container, false);
+        FragmentManager manager = getChildFragmentManager();
         events = new ArrayList<>();
         mRecycler = v.findViewById(R.id.recyclerView);
-        mEventAdapter = new EventAdapter(getContext(), events);
+        mEventAdapter = new EventAdapter(getContext(), events, manager);
         mRecycler.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecycler.setAdapter(mEventAdapter);
 
@@ -113,13 +117,13 @@ public class EditEventFrag extends Fragment {
                     setUpRecycler(events);
                 }, Throwable::printStackTrace);
 
-        RequestQueue requestQ = Volley.newRequestQueue(getContext());
+        RequestQueue requestQ = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         requestQ.add(request);
 
     }
 
     private void getUserInfo(User user, String profileID) {
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext()); //Sets up the RequestQueue
+        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext())); //Sets up the RequestQueue
 
         String url = "https://chowmate.herokuapp.com/api/profile/" + profileID; //URL where the information will be sent
 
@@ -151,7 +155,7 @@ public class EditEventFrag extends Fragment {
     }
 
     private void setUpRecycler(ArrayList<Event> events) {
-        mEventAdapter = new EventAdapter(getContext(), events);
+        mEventAdapter = new EventAdapter(getContext(), events, getFragmentManager());
         LinearLayoutManager linearLayoutManager =
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         mRecycler.setLayoutManager(linearLayoutManager);
