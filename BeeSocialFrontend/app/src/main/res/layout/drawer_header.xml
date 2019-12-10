@@ -10,13 +10,13 @@
 
 
     <ImageView
-        android:layout_width="400dp"
+        android:layout_width="237dp"
         android:layout_height="300dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginBottom="-70dp"
         android:contentDescription="@string/beesociallogo"
-        android:layout_marginBottom="-100dp"
-        android:layout_marginLeft="-70dp"
 
-        app:srcCompat="@drawable/chowmatelogo" />
+        app:srcCompat="@drawable/chow3" />
 
 
 </LinearLayout>

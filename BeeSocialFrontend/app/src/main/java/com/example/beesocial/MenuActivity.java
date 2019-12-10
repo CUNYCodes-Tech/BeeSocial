@@ -43,6 +43,7 @@ public class MenuActivity extends AppCompatActivity implements NavigationView.On
         }
 
         navigationView = findViewById(R.id.navigationView);
+        navigationView.setItemIconTintList(null);
         navigationView.setNavigationItemSelectedListener(this);
 
     }

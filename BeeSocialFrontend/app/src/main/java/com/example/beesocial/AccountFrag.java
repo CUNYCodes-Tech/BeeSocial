@@ -42,31 +42,23 @@ public class AccountFrag extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.account_fragment, container, false);
-
         fName = view.findViewById(R.id.firstName);
         birthday = view.findViewById(R.id.birthDate);
         gender = view.findViewById(R.id.genderIdentity);
         favFood = view.findViewById(R.id.favoriteFoods);
         FloatingActionButton fab = view.findViewById(R.id.fab);
-
-        //init progress dialog
-        //ProgressDialog pd = new ProgressDialog(getActivity());
-
         rq = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         fName = view.findViewById(R.id.firstName);
-
         getUserInfo();
-
         fab.setOnClickListener(v -> showEditProfile());
-
         return view;
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
+
     private void getUserInfo() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String ID = sharedPreferences.getString("id", "");
@@ -95,7 +87,6 @@ public class AccountFrag extends Fragment {
                 return headers;
             }
         };
-
         rq.add(jsonObjectRequest);
     }
 
@@ -126,33 +117,25 @@ public class AccountFrag extends Fragment {
                 return headers;
             }
         };
-
         rq.add(jsonObjectRequest);
     }
 
     private void showEditProfile() {
         String[] options = {"Edit Name", "Edit Birthday", "Edit Gender", "Edit Favorite Foods"};
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         builder.setTitle("Choose Action");
         builder.setItems(options, (dialog, which) -> {
             if (which == 0) {
                 showAddItemDialog("Name");
-
             } else if (which == 1) {
                 showAddItemDialog("Birthday");
-
             } else if (which == 2) {
                 showAddItemDialog("Gender");
-
             } else if (which == 3) {
                 showAddItemDialog("Favorite foods");
-
             }
         });
         builder.create().show();
-
     }
 
     private void showAddItemDialog(String key) {
@@ -181,7 +164,6 @@ public class AccountFrag extends Fragment {
                             sendJsonRequest();
                             break;
                     }
-
                     if (!TextUtils.isEmpty(value)) {
                         HashMap<String, Object> result = new HashMap<>();
                         result.put(key, value);
@@ -194,8 +176,6 @@ public class AccountFrag extends Fragment {
         dialog.show();
     }
 }
-
-
 
 
 

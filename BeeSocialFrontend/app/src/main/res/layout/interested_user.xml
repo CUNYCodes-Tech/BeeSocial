@@ -12,6 +12,7 @@
         android:layout_height="wrap_content">
 
     <TextView
+        android:textColor="@color/bluecolor"
         android:id="@+id/userInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

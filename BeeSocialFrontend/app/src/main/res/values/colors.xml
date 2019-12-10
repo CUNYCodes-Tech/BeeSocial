@@ -4,4 +4,8 @@
     <color name="colorPrimaryDark">#442E0E</color>
     <color name="colorAccent">#F59F21</color>
     <color name="lightColor">#E2DDB5</color>
+    <color name="bluecolor">#1E2171</color>
+    <color name="mustardColor">#A27E27</color>
+    <color name="purpColor">#3c186e</color>
+
 </resources>

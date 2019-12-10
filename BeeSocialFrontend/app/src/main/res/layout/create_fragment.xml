@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
     android:orientation="vertical">
-
 
     <TextView
         android:id="@+id/welcomeUser"
@@ -15,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:text="Welcome ChowMate."
-        android:textColor="#0E0D0D"
+        android:textColor="@color/bluecolor"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -27,10 +25,9 @@
         android:layout_centerHorizontal="true"
         android:paddingTop="10dp"
         android:text="Lets get chowing!"
-        android:textColor="#0E0D0D"
+        android:textColor="@color/bluecolor"
         android:textSize="17sp"
         android:textStyle="bold" />
-
 
     <ScrollView
         android:id="@+id/scrollView"
@@ -42,17 +39,16 @@
             android:layout_height="match_parent"
             android:layout_gravity="center">
 
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/card"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="40dp"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="150dp"
                 android:layout_marginRight="40dp"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="15dp">
-
+                \
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -65,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Name of Event (Dinner, Happy Hour, Brunch)"
-                        android:textColor="#0E0D0D"
+                        android:textColor="@color/bluecolor"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -82,7 +78,7 @@
                         android:layout_margin="10dp"
                         android:inputType="textMultiLine"
                         android:text="Event Location"
-                        android:textColor="#0E0D0D"
+                        android:textColor="@color/bluecolor"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -99,10 +95,10 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Date"
-                        android:textColor="#0E0D0D"
+                        android:textColor="@color/bluecolor"
                         android:textSize="14sp"
                         android:textStyle="bold" />
-
+                    />
 
                     <EditText
                         android:id="@+id/pickDate"
@@ -118,25 +114,21 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:text="Time"
-                        android:textColor="#0E0D0D"
+                        android:textColor="@color/bluecolor"
                         android:textSize="14sp"
                         android:textStyle="bold" />
-
+                    />
 
                     <EditText
                         android:id="@+id/pickTime"
-                        android:layout_width="314dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/timeText"
                         android:layout_margin="10dp"
-
                         android:background="@drawable/date_selector"
-
                         android:textColor="@color/colorPrimaryDark" />
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
-
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -153,16 +145,13 @@
                     android:id="@+id/createEventSubmit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/side_nav_bar"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/button"
                     android:text="Create"
-                    android:textColor="#0E0D0D"
+                    android:textColor="@color/purpColor"
                     android:textSize="20dp"
                     android:textStyle="bold" />
             </RelativeLayout>
         </RelativeLayout>
     </ScrollView>
 </RelativeLayout>
-
-
-
-
