@@ -1,5 +1,8 @@
 package com.example.beesocial;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,12 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.Request;
@@ -36,6 +42,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -43,6 +50,8 @@ import java.util.Objects;
 import static android.content.ContentValues.TAG;
 
 public class CreateEventFrag extends Fragment {
+//    private static LocalDate eventDate;
+//    private static LocalTime eventTime;
 
     private EditText appNameOfEvent;
     private Place eventLocation;
@@ -93,13 +102,26 @@ public class CreateEventFrag extends Fragment {
         createEventSubmit.setOnClickListener(
                 v1 -> submitEvent()
         );
+
+//        //Displays the time for the event
+//        Button timePicker = v.findViewById(R.id.TimePicker);
+//        timePicker.setOnClickListener(
+//                this::showTimePickerDialog
+//        );
+//
+//        //Displays the date for the event
+//        Button datePicker = v.findViewById(R.id.DatePicker);
+//        datePicker.setOnClickListener(
+//                this::showDatePickDialog
+//        );
+
         return v;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void submitEvent() {
         //Creates the request queue
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        RequestQueue requestQueue = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
 
         //Gets the user ID from Shared Preferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
@@ -166,7 +188,6 @@ public class CreateEventFrag extends Fragment {
         }
 
         String url = "https://chowmate.herokuapp.com/api/events"; //URL where the information will be sent
-//        String url = "http://10.0.2.2:8888/api/events";
 
         // TODO: Handle error
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
@@ -191,6 +212,60 @@ public class CreateEventFrag extends Fragment {
             }
         };
         requestQueue.add(jsonObjectRequest);
+    }
+
+    private void showTimePickerDialog(View v) {
+        DialogFragment newFragment = new TimePickerFragment();
+        assert getFragmentManager() != null;
+        newFragment.show(getFragmentManager(), "timePicker");
+    }
+
+    private void showDatePickDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        assert getFragmentManager() != null;
+        newFragment.show(getFragmentManager(), "datePicker");
+    }
+
+    public static class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            final Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+
+            return new TimePickerDialog(getActivity(), this, hour, minute,
+                    false);
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            //eventTime = LocalTime.of(hourOfDay, minute);
+        }
+    }
+
+    public static class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(Objects.requireNonNull(getActivity()), this, year, month, day);
+        }
+
+        @RequiresApi(api = Build.VERSION_CODES.O)
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            //eventDate = LocalDate.of(year, month, dayOfMonth);
+        }
     }
 
 }

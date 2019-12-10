@@ -1,4 +1,5 @@
 package com.example.beesocial;
+
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -11,16 +12,20 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -28,13 +33,16 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+
 public class AccountFrag extends Fragment {
     // editing users profile under account fragment
     private TextView fName, birthday, gender, favFood;
     private RequestQueue rq;
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Nullable
     @Override
+
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.account_fragment, container, false);
         fName = view.findViewById(R.id.firstName);
@@ -42,15 +50,15 @@ public class AccountFrag extends Fragment {
         gender = view.findViewById(R.id.genderIdentity);
         favFood = view.findViewById(R.id.favoriteFoods);
         FloatingActionButton fab = view.findViewById(R.id.fab);
-        //init progress dialog
-        //ProgressDialog pd = new ProgressDialog(getActivity());
         rq = Volley.newRequestQueue(Objects.requireNonNull(getContext()));
         fName = view.findViewById(R.id.firstName);
         getUserInfo();
         fab.setOnClickListener(v -> showEditProfile());
         return view;
     }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
+
     private void getUserInfo() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String ID = sharedPreferences.getString("id", "");
@@ -81,6 +89,7 @@ public class AccountFrag extends Fragment {
         };
         rq.add(jsonObjectRequest);
     }
+
     private void sendJsonRequest() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         String ID = sharedPreferences.getString("id", "");
@@ -110,6 +119,7 @@ public class AccountFrag extends Fragment {
         };
         rq.add(jsonObjectRequest);
     }
+
     private void showEditProfile() {
         String[] options = {"Edit Name", "Edit Birthday", "Edit Gender", "Edit Favorite Foods"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -127,6 +137,7 @@ public class AccountFrag extends Fragment {
         });
         builder.create().show();
     }
+
     private void showAddItemDialog(String key) {
         EditText taskEditText = new EditText(getActivity());
         AlertDialog dialog = new AlertDialog.Builder(getActivity())
